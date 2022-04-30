@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cdc82f28ecd544a987f9fd3095d63f59" Name="Diagram1">
+        <EntityTypeShape EntityType="group363_06Model.booking_history" Width="1.5" PointX="7.5" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="group363_06Model.borrow_room" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="group363_06Model.client" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="group363_06Model.info_room" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="group363_06Model.role" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="group363_06Model.status_User" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="group363_06Model.sysdiagrams" Width="1.5" PointX="5.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="group363_06Model.type_room" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="group363_06Model.user" Width="1.5" PointX="3" PointY="8.125" IsExpanded="true" />
+        <AssociationConnector Association="group363_06Model.FK_booking_history_borrow_room" ManuallyRouted="false" />
+        <AssociationConnector Association="group363_06Model.borrow_room_fk0" ManuallyRouted="false" />
+        <AssociationConnector Association="group363_06Model.borrow_room_fk1" ManuallyRouted="false" />
+        <AssociationConnector Association="group363_06Model.FK_borrow_room_user" ManuallyRouted="false" />
+        <AssociationConnector Association="group363_06Model.FK_info_room_type_room" ManuallyRouted="false" />
+        <AssociationConnector Association="group363_06Model.FK_user_role" ManuallyRouted="false" />
+        <AssociationConnector Association="group363_06Model.FK_user_status_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,542 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище group363_06Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="booking_history">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="borrow_room" Type="int" Nullable="false" />
+          <Property Name="date_departure" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="borrow_room">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="room" Type="int" Nullable="false" />
+          <Property Name="client" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="administrator" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="count_day" Type="int" Nullable="false" />
+          <Property Name="date_settlement" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="phone" />
+          </Key>
+          <Property Name="phone" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="passport_details" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="info_room">
+          <Key>
+            <PropertyRef Name="num_room" />
+          </Key>
+          <Property Name="num_room" Type="int" Nullable="false" />
+          <Property Name="count_room" Type="int" Nullable="false" />
+          <Property Name="capacity" Type="int" Nullable="false" />
+          <Property Name="type_room" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="short_description" Type="varchar" MaxLength="255" />
+          <Property Name="price" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="status_User">
+          <Key>
+            <PropertyRef Name="name_status" />
+          </Key>
+          <Property Name="name_status" Type="varchar" MaxLength="12" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="type_room">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="login" />
+          </Key>
+          <Property Name="login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="40" Nullable="false" />
+          <Property Name="role" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="user_status" Type="varchar" MaxLength="12" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="borrow_room_fk0">
+          <End Role="info_room" Type="Self.info_room" Multiplicity="1" />
+          <End Role="borrow_room" Type="Self.borrow_room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="info_room">
+              <PropertyRef Name="num_room" />
+            </Principal>
+            <Dependent Role="borrow_room">
+              <PropertyRef Name="room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="borrow_room_fk1">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="borrow_room" Type="Self.borrow_room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="phone" />
+            </Principal>
+            <Dependent Role="borrow_room">
+              <PropertyRef Name="client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_booking_history_borrow_room">
+          <End Role="borrow_room" Type="Self.borrow_room" Multiplicity="1" />
+          <End Role="booking_history" Type="Self.booking_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="borrow_room">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="booking_history">
+              <PropertyRef Name="borrow_room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_borrow_room_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="borrow_room" Type="Self.borrow_room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="login" />
+            </Principal>
+            <Dependent Role="borrow_room">
+              <PropertyRef Name="administrator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_info_room_type_room">
+          <End Role="type_room" Type="Self.type_room" Multiplicity="1" />
+          <End Role="info_room" Type="Self.info_room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type_room">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="info_room">
+              <PropertyRef Name="type_room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_role">
+          <End Role="role" Type="Self.role" Multiplicity="1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_status_User">
+          <End Role="status_User" Type="Self.status_User" Multiplicity="1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status_User">
+              <PropertyRef Name="name_status" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="user_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище group363_06ModelContainer">
+          <EntitySet Name="booking_history" EntityType="Self.booking_history" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="borrow_room" EntityType="Self.borrow_room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="info_room" EntityType="Self.info_room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="status_User" EntityType="Self.status_User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="type_room" EntityType="Self.type_room" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="borrow_room_fk0" Association="Self.borrow_room_fk0">
+            <End Role="info_room" EntitySet="info_room" />
+            <End Role="borrow_room" EntitySet="borrow_room" />
+          </AssociationSet>
+          <AssociationSet Name="borrow_room_fk1" Association="Self.borrow_room_fk1">
+            <End Role="client" EntitySet="client" />
+            <End Role="borrow_room" EntitySet="borrow_room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_booking_history_borrow_room" Association="Self.FK_booking_history_borrow_room">
+            <End Role="borrow_room" EntitySet="borrow_room" />
+            <End Role="booking_history" EntitySet="booking_history" />
+          </AssociationSet>
+          <AssociationSet Name="FK_borrow_room_user" Association="Self.FK_borrow_room_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="borrow_room" EntitySet="borrow_room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_info_room_type_room" Association="Self.FK_info_room_type_room">
+            <End Role="type_room" EntitySet="type_room" />
+            <End Role="info_room" EntitySet="info_room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_role" Association="Self.FK_user_role">
+            <End Role="role" EntitySet="role" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_status_User" Association="Self.FK_user_status_User">
+            <End Role="status_User" EntitySet="status_User" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="group363_06Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="booking_history">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="borrow_room" Type="Int32" Nullable="false" />
+          <Property Name="date_departure" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="borrow_room1" Relationship="Self.FK_booking_history_borrow_room" FromRole="booking_history" ToRole="borrow_room" />
+        </EntityType>
+        <EntityType Name="borrow_room">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="room" Type="Int32" Nullable="false" />
+          <Property Name="client" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="administrator" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="count_day" Type="Int32" Nullable="false" />
+          <Property Name="date_settlement" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="booking_history" Relationship="Self.FK_booking_history_borrow_room" FromRole="borrow_room" ToRole="booking_history" />
+          <NavigationProperty Name="info_room" Relationship="Self.borrow_room_fk0" FromRole="borrow_room" ToRole="info_room" />
+          <NavigationProperty Name="client1" Relationship="Self.borrow_room_fk1" FromRole="borrow_room" ToRole="client" />
+          <NavigationProperty Name="user" Relationship="Self.FK_borrow_room_user" FromRole="borrow_room" ToRole="user" />
+        </EntityType>
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="phone" />
+          </Key>
+          <Property Name="phone" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="passport_details" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="borrow_room" Relationship="Self.borrow_room_fk1" FromRole="client" ToRole="borrow_room" />
+        </EntityType>
+        <EntityType Name="info_room">
+          <Key>
+            <PropertyRef Name="num_room" />
+          </Key>
+          <Property Name="num_room" Type="Int32" Nullable="false" />
+          <Property Name="count_room" Type="Int32" Nullable="false" />
+          <Property Name="capacity" Type="Int32" Nullable="false" />
+          <Property Name="type_room" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="short_description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="borrow_room" Relationship="Self.borrow_room_fk0" FromRole="info_room" ToRole="borrow_room" />
+          <NavigationProperty Name="type_room1" Relationship="Self.FK_info_room_type_room" FromRole="info_room" ToRole="type_room" />
+        </EntityType>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.FK_user_role" FromRole="role" ToRole="user" />
+        </EntityType>
+        <EntityType Name="status_User">
+          <Key>
+            <PropertyRef Name="name_status" />
+          </Key>
+          <Property Name="name_status" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.FK_user_status_User" FromRole="status_User" ToRole="user" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="type_room">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="info_room" Relationship="Self.FK_info_room_type_room" FromRole="type_room" ToRole="info_room" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="login" />
+          </Key>
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="role" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_status" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="borrow_room" Relationship="Self.FK_borrow_room_user" FromRole="user" ToRole="borrow_room" />
+          <NavigationProperty Name="role1" Relationship="Self.FK_user_role" FromRole="user" ToRole="role" />
+          <NavigationProperty Name="status_User" Relationship="Self.FK_user_status_User" FromRole="user" ToRole="status_User" />
+        </EntityType>
+        <Association Name="FK_booking_history_borrow_room">
+          <End Role="borrow_room" Type="Self.borrow_room" Multiplicity="1" />
+          <End Role="booking_history" Type="Self.booking_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="borrow_room">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="booking_history">
+              <PropertyRef Name="borrow_room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="borrow_room_fk0">
+          <End Role="info_room" Type="Self.info_room" Multiplicity="1" />
+          <End Role="borrow_room" Type="Self.borrow_room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="info_room">
+              <PropertyRef Name="num_room" />
+            </Principal>
+            <Dependent Role="borrow_room">
+              <PropertyRef Name="room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="borrow_room_fk1">
+          <End Role="client" Type="Self.client" Multiplicity="1" />
+          <End Role="borrow_room" Type="Self.borrow_room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="client">
+              <PropertyRef Name="phone" />
+            </Principal>
+            <Dependent Role="borrow_room">
+              <PropertyRef Name="client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_borrow_room_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="borrow_room" Type="Self.borrow_room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="login" />
+            </Principal>
+            <Dependent Role="borrow_room">
+              <PropertyRef Name="administrator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_info_room_type_room">
+          <End Role="type_room" Type="Self.type_room" Multiplicity="1" />
+          <End Role="info_room" Type="Self.info_room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type_room">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="info_room">
+              <PropertyRef Name="type_room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_role">
+          <End Role="role" Type="Self.role" Multiplicity="1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="role">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_status_User">
+          <End Role="status_User" Type="Self.status_User" Multiplicity="1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status_User">
+              <PropertyRef Name="name_status" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="user_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="group363_06Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="booking_history" EntityType="Self.booking_history" />
+          <EntitySet Name="borrow_room" EntityType="Self.borrow_room" />
+          <EntitySet Name="client" EntityType="Self.client" />
+          <EntitySet Name="info_room" EntityType="Self.info_room" />
+          <EntitySet Name="role" EntityType="Self.role" />
+          <EntitySet Name="status_User" EntityType="Self.status_User" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="type_room" EntityType="Self.type_room" />
+          <EntitySet Name="user" EntityType="Self.user" />
+          <AssociationSet Name="FK_booking_history_borrow_room" Association="Self.FK_booking_history_borrow_room">
+            <End Role="borrow_room" EntitySet="borrow_room" />
+            <End Role="booking_history" EntitySet="booking_history" />
+          </AssociationSet>
+          <AssociationSet Name="borrow_room_fk0" Association="Self.borrow_room_fk0">
+            <End Role="info_room" EntitySet="info_room" />
+            <End Role="borrow_room" EntitySet="borrow_room" />
+          </AssociationSet>
+          <AssociationSet Name="borrow_room_fk1" Association="Self.borrow_room_fk1">
+            <End Role="client" EntitySet="client" />
+            <End Role="borrow_room" EntitySet="borrow_room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_borrow_room_user" Association="Self.FK_borrow_room_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="borrow_room" EntitySet="borrow_room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_info_room_type_room" Association="Self.FK_info_room_type_room">
+            <End Role="type_room" EntitySet="type_room" />
+            <End Role="info_room" EntitySet="info_room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_role" Association="Self.FK_user_role">
+            <End Role="role" EntitySet="role" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_status_User" Association="Self.FK_user_status_User">
+            <End Role="status_User" EntitySet="status_User" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище group363_06ModelContainer" CdmEntityContainer="group363_06Entities">
+          <EntitySetMapping Name="booking_history">
+            <EntityTypeMapping TypeName="group363_06Model.booking_history">
+              <MappingFragment StoreEntitySet="booking_history">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="borrow_room" ColumnName="borrow_room" />
+                <ScalarProperty Name="date_departure" ColumnName="date_departure" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="borrow_room">
+            <EntityTypeMapping TypeName="group363_06Model.borrow_room">
+              <MappingFragment StoreEntitySet="borrow_room">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="room" ColumnName="room" />
+                <ScalarProperty Name="client" ColumnName="client" />
+                <ScalarProperty Name="administrator" ColumnName="administrator" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="count_day" ColumnName="count_day" />
+                <ScalarProperty Name="date_settlement" ColumnName="date_settlement" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="client">
+            <EntityTypeMapping TypeName="group363_06Model.client">
+              <MappingFragment StoreEntitySet="client">
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="passport_details" ColumnName="passport_details" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="info_room">
+            <EntityTypeMapping TypeName="group363_06Model.info_room">
+              <MappingFragment StoreEntitySet="info_room">
+                <ScalarProperty Name="num_room" ColumnName="num_room" />
+                <ScalarProperty Name="count_room" ColumnName="count_room" />
+                <ScalarProperty Name="capacity" ColumnName="capacity" />
+                <ScalarProperty Name="type_room" ColumnName="type_room" />
+                <ScalarProperty Name="short_description" ColumnName="short_description" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="role">
+            <EntityTypeMapping TypeName="group363_06Model.role">
+              <MappingFragment StoreEntitySet="role">
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="status_User">
+            <EntityTypeMapping TypeName="group363_06Model.status_User">
+              <MappingFragment StoreEntitySet="status_User">
+                <ScalarProperty Name="name_status" ColumnName="name_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="group363_06Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="type_room">
+            <EntityTypeMapping TypeName="group363_06Model.type_room">
+              <MappingFragment StoreEntitySet="type_room">
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="group363_06Model.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="user_status" ColumnName="user_status" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
