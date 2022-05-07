@@ -17,6 +17,7 @@ namespace AdminDayAndNight.BD
         public int id { get; set; }
         public int borrow_room { get; set; }
         public System.DateTime date_departure { get; set; }
+        public string cause { get; set; }
     
         public virtual borrow_room borrow_room1 { get; set; }
     }

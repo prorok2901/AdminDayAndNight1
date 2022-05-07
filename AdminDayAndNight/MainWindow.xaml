@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Background>
-        <ImageBrush ImageSource="C:\Users\student\source\repos\AdminDayAndNight\AdminDayAndNight\fsdfgh1.png"/>
+        <ImageBrush ImageSource="C:\Users\student\Source\Repos\prorok2901\AdminDayAndNight\AdminDayAndNight\fsdfgh1.png"/>
     </Window.Background>
     <Grid>
 

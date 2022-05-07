@@ -4,7 +4,19 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище group363_06Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище DayAndNightModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "group363_06.dbo.blocking" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="blocking">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="block_time" />
+            <PropertyRef Name="block_user" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="block_time" Type="datetime" Nullable="false" />
+          <Property Name="block_user" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="booking_history">
           <Key>
             <PropertyRef Name="id" />
@@ -12,6 +24,7 @@
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="borrow_room" Type="int" Nullable="false" />
           <Property Name="date_departure" Type="date" Nullable="false" />
+          <Property Name="cause" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="borrow_room">
           <Key>
@@ -50,21 +63,11 @@
           </Key>
           <Property Name="name" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
-        <EntityType Name="status_User">
+        <EntityType Name="status_user">
           <Key>
-            <PropertyRef Name="name_status" />
+            <PropertyRef Name="name" />
           </Key>
-          <Property Name="name_status" Type="varchar" MaxLength="12" Nullable="false" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
+          <Property Name="name" Type="varchar" MaxLength="12" Nullable="false" />
         </EntityType>
         <EntityType Name="type_room">
           <Key>
@@ -103,6 +106,18 @@
             </Principal>
             <Dependent Role="borrow_room">
               <PropertyRef Name="client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_blocking_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="blocking" Type="Self.blocking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="login" />
+            </Principal>
+            <Dependent Role="blocking">
+              <PropertyRef Name="block_user" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -155,27 +170,33 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_user_status_User">
-          <End Role="status_User" Type="Self.status_User" Multiplicity="1" />
+          <End Role="status_user" Type="Self.status_user" Multiplicity="1" />
           <End Role="user" Type="Self.user" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="status_User">
-              <PropertyRef Name="name_status" />
+            <Principal Role="status_user">
+              <PropertyRef Name="name" />
             </Principal>
             <Dependent Role="user">
               <PropertyRef Name="user_status" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Хранилище group363_06ModelContainer">
+        <EntityContainer Name="Хранилище DayAndNightModelContainer">
           <EntitySet Name="booking_history" EntityType="Self.booking_history" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="borrow_room" EntityType="Self.borrow_room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="info_room" EntityType="Self.info_room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="status_User" EntityType="Self.status_User" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="status_user" EntityType="Self.status_user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="type_room" EntityType="Self.type_room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="blocking" EntityType="Self.blocking" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [blocking].[id] AS [id], 
+    [blocking].[block_time] AS [block_time], 
+    [blocking].[block_user] AS [block_user]
+    FROM [dbo].[blocking] AS [blocking]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="borrow_room_fk0" Association="Self.borrow_room_fk0">
             <End Role="info_room" EntitySet="info_room" />
             <End Role="borrow_room" EntitySet="borrow_room" />
@@ -183,6 +204,10 @@
           <AssociationSet Name="borrow_room_fk1" Association="Self.borrow_room_fk1">
             <End Role="client" EntitySet="client" />
             <End Role="borrow_room" EntitySet="borrow_room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_blocking_user" Association="Self.FK_blocking_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="blocking" EntitySet="blocking" />
           </AssociationSet>
           <AssociationSet Name="FK_booking_history_borrow_room" Association="Self.FK_booking_history_borrow_room">
             <End Role="borrow_room" EntitySet="borrow_room" />
@@ -201,7 +226,7 @@
             <End Role="user" EntitySet="user" />
           </AssociationSet>
           <AssociationSet Name="FK_user_status_User" Association="Self.FK_user_status_User">
-            <End Role="status_User" EntitySet="status_User" />
+            <End Role="status_user" EntitySet="status_user" />
             <End Role="user" EntitySet="user" />
           </AssociationSet>
         </EntityContainer>
@@ -209,7 +234,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="group363_06Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="DayAndNightModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="booking_history">
           <Key>
             <PropertyRef Name="id" />
@@ -217,6 +242,7 @@
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="borrow_room" Type="Int32" Nullable="false" />
           <Property Name="date_departure" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="cause" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="borrow_room1" Relationship="Self.FK_booking_history_borrow_room" FromRole="booking_history" ToRole="borrow_room" />
         </EntityType>
         <EntityType Name="borrow_room">
@@ -264,22 +290,12 @@
           <Property Name="name" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="user" Relationship="Self.FK_user_role" FromRole="role" ToRole="user" />
         </EntityType>
-        <EntityType Name="status_User">
+        <EntityType Name="status_user">
           <Key>
-            <PropertyRef Name="name_status" />
+            <PropertyRef Name="name" />
           </Key>
-          <Property Name="name_status" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="user" Relationship="Self.FK_user_status_User" FromRole="status_User" ToRole="user" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="name" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.FK_user_status_User" FromRole="status_user" ToRole="user" />
         </EntityType>
         <EntityType Name="type_room">
           <Key>
@@ -299,7 +315,19 @@
           <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="borrow_room" Relationship="Self.FK_borrow_room_user" FromRole="user" ToRole="borrow_room" />
           <NavigationProperty Name="role1" Relationship="Self.FK_user_role" FromRole="user" ToRole="role" />
-          <NavigationProperty Name="status_User" Relationship="Self.FK_user_status_User" FromRole="user" ToRole="status_User" />
+          <NavigationProperty Name="status_user" Relationship="Self.FK_user_status_User" FromRole="user" ToRole="status_user" />
+          <NavigationProperty Name="blocking" Relationship="Self.FK_blocking_user" FromRole="user" ToRole="blocking" />
+        </EntityType>
+        <EntityType Name="blocking">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="block_time" />
+            <PropertyRef Name="block_user" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="block_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="block_user" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="Self.FK_blocking_user" FromRole="blocking" ToRole="user" />
         </EntityType>
         <Association Name="FK_booking_history_borrow_room">
           <End Role="borrow_room" Type="Self.borrow_room" Multiplicity="1" />
@@ -374,27 +402,39 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_user_status_User">
-          <End Role="status_User" Type="Self.status_User" Multiplicity="1" />
+          <End Role="status_user" Type="Self.status_user" Multiplicity="1" />
           <End Role="user" Type="Self.user" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="status_User">
-              <PropertyRef Name="name_status" />
+            <Principal Role="status_user">
+              <PropertyRef Name="name" />
             </Principal>
             <Dependent Role="user">
               <PropertyRef Name="user_status" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="group363_06Entities" annotation:LazyLoadingEnabled="true">
+        <Association Name="FK_blocking_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="blocking" Type="Self.blocking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="login" />
+            </Principal>
+            <Dependent Role="blocking">
+              <PropertyRef Name="block_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DayAndnightEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="booking_history" EntityType="Self.booking_history" />
           <EntitySet Name="borrow_room" EntityType="Self.borrow_room" />
           <EntitySet Name="client" EntityType="Self.client" />
           <EntitySet Name="info_room" EntityType="Self.info_room" />
           <EntitySet Name="role" EntityType="Self.role" />
-          <EntitySet Name="status_User" EntityType="Self.status_User" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="status_user" EntityType="Self.status_user" />
           <EntitySet Name="type_room" EntityType="Self.type_room" />
           <EntitySet Name="user" EntityType="Self.user" />
+          <EntitySet Name="blocking" EntityType="Self.blocking" />
           <AssociationSet Name="FK_booking_history_borrow_room" Association="Self.FK_booking_history_borrow_room">
             <End Role="borrow_room" EntitySet="borrow_room" />
             <End Role="booking_history" EntitySet="booking_history" />
@@ -420,8 +460,12 @@
             <End Role="user" EntitySet="user" />
           </AssociationSet>
           <AssociationSet Name="FK_user_status_User" Association="Self.FK_user_status_User">
-            <End Role="status_User" EntitySet="status_User" />
+            <End Role="status_user" EntitySet="status_user" />
             <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_blocking_user" Association="Self.FK_blocking_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="blocking" EntitySet="blocking" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -429,18 +473,19 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище group363_06ModelContainer" CdmEntityContainer="group363_06Entities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DayAndNightModelContainer" CdmEntityContainer="DayAndnightEntities">
           <EntitySetMapping Name="booking_history">
-            <EntityTypeMapping TypeName="group363_06Model.booking_history">
+            <EntityTypeMapping TypeName="DayAndNightModel.booking_history">
               <MappingFragment StoreEntitySet="booking_history">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="borrow_room" ColumnName="borrow_room" />
                 <ScalarProperty Name="date_departure" ColumnName="date_departure" />
+                <ScalarProperty Name="cause" ColumnName="cause" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="borrow_room">
-            <EntityTypeMapping TypeName="group363_06Model.borrow_room">
+            <EntityTypeMapping TypeName="DayAndNightModel.borrow_room">
               <MappingFragment StoreEntitySet="borrow_room">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="room" ColumnName="room" />
@@ -453,7 +498,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="client">
-            <EntityTypeMapping TypeName="group363_06Model.client">
+            <EntityTypeMapping TypeName="DayAndNightModel.client">
               <MappingFragment StoreEntitySet="client">
                 <ScalarProperty Name="phone" ColumnName="phone" />
                 <ScalarProperty Name="name" ColumnName="name" />
@@ -462,7 +507,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="info_room">
-            <EntityTypeMapping TypeName="group363_06Model.info_room">
+            <EntityTypeMapping TypeName="DayAndNightModel.info_room">
               <MappingFragment StoreEntitySet="info_room">
                 <ScalarProperty Name="num_room" ColumnName="num_room" />
                 <ScalarProperty Name="count_room" ColumnName="count_room" />
@@ -474,45 +519,43 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="role">
-            <EntityTypeMapping TypeName="group363_06Model.role">
+            <EntityTypeMapping TypeName="DayAndNightModel.role">
               <MappingFragment StoreEntitySet="role">
                 <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="status_User">
-            <EntityTypeMapping TypeName="group363_06Model.status_User">
-              <MappingFragment StoreEntitySet="status_User">
-                <ScalarProperty Name="name_status" ColumnName="name_status" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="group363_06Model.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
+          <EntitySetMapping Name="status_user">
+            <EntityTypeMapping TypeName="DayAndNightModel.status_user">
+              <MappingFragment StoreEntitySet="status_user">
                 <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="type_room">
-            <EntityTypeMapping TypeName="group363_06Model.type_room">
+            <EntityTypeMapping TypeName="DayAndNightModel.type_room">
               <MappingFragment StoreEntitySet="type_room">
                 <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="user">
-            <EntityTypeMapping TypeName="group363_06Model.user">
+            <EntityTypeMapping TypeName="DayAndNightModel.user">
               <MappingFragment StoreEntitySet="user">
                 <ScalarProperty Name="login" ColumnName="login" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="role" ColumnName="role" />
                 <ScalarProperty Name="user_status" ColumnName="user_status" />
                 <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="blocking">
+            <EntityTypeMapping TypeName="DayAndNightModel.blocking">
+              <MappingFragment StoreEntitySet="blocking">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="block_time" ColumnName="block_time" />
+                <ScalarProperty Name="block_user" ColumnName="block_user" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

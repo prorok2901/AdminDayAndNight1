@@ -9,6 +9,18 @@
       Title="Authorization">
 
     <Grid>
+        <TextBox Margin="563,0,23,381" Height="41" VerticalAlignment="Bottom"/>
+        <TextBox Margin="563,0,23,335" Height="41" VerticalAlignment="Bottom"/>
         
+        <Button Margin="570,126,30,276" Content="Войти" Click="Button_Click"/>
+        <Button Margin="570,179,30,238" Content="Зарегистрироваться"/>
+        
+        <Border x:Name="CapTcha" Margin="153,0,324,225" Height="197" VerticalAlignment="Bottom" Visibility="Hidden">
+            <Grid>
+                <TextBlock x:Name="captcha" Margin="36,26,37,110"/>
+                <TextBox x:Name="ValidateCaptcha" Margin="36,98,37,33" KeyDown="TextBox_KeyDown" />
+            </Grid>
+        </Border>
+       
     </Grid>
 </Page>

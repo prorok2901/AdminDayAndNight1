@@ -18,6 +18,7 @@ namespace AdminDayAndNight.BD
         public user()
         {
             this.borrow_room = new HashSet<borrow_room>();
+            this.blocking = new HashSet<blocking>();
         }
     
         public string login { get; set; }
@@ -29,6 +30,8 @@ namespace AdminDayAndNight.BD
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<borrow_room> borrow_room { get; set; }
         public virtual role role1 { get; set; }
-        public virtual status_User status_User { get; set; }
+        public virtual status_user status_user { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<blocking> blocking { get; set; }
     }
 }

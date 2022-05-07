@@ -13,10 +13,10 @@ namespace AdminDayAndNight.BD
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class group363_06Entities : DbContext
+    public partial class DayAndnightEntities : DbContext
     {
-        public group363_06Entities()
-            : base("name=group363_06Entities")
+        public DayAndnightEntities()
+            : base("name=DayAndnightEntities")
         {
         }
     
@@ -30,9 +30,9 @@ namespace AdminDayAndNight.BD
         public virtual DbSet<client> client { get; set; }
         public virtual DbSet<info_room> info_room { get; set; }
         public virtual DbSet<role> role { get; set; }
-        public virtual DbSet<status_User> status_User { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
+        public virtual DbSet<status_user> status_user { get; set; }
         public virtual DbSet<type_room> type_room { get; set; }
         public virtual DbSet<user> user { get; set; }
+        public virtual DbSet<blocking> blocking { get; set; }
     }
 }

@@ -12,15 +12,15 @@ namespace AdminDayAndNight.BD
     using System;
     using System.Collections.Generic;
     
-    public partial class status_User
+    public partial class status_user
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public status_User()
+        public status_user()
         {
             this.user = new HashSet<user>();
         }
     
-        public string name_status { get; set; }
+        public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<user> user { get; set; }
