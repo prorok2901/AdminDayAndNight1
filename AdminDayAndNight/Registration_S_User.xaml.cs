@@ -15,14 +15,30 @@ using System.Windows.Shapes;
 
 namespace AdminDayAndNight
 {
-    /// <summary>
-    /// Логика взаимодействия для Registration_S_User.xaml
-    /// </summary>
     public partial class Registration_S_User : Page
     {
+        Grid grid = new Grid();
+        ImageBrush image = new ImageBrush();
         public Registration_S_User()
         {
             InitializeComponent();
+        }
+        public Registration_S_User(Grid _grid, ImageBrush startImage)
+        {
+            InitializeComponent();
+            grid = _grid;
+            image = startImage;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (grid.Visibility != Visibility.Hidden)
+            {
+                grid.Visibility = Visibility.Hidden;
+                image.ImageSource = new BitmapImage(new Uri(@"C:\Users\proro\Source\Repos\prorok2901\AdminDayAndNight1\AdminDayAndNight\fsdfgh1.png")); ;
+            }
+
+            NavigationService.Navigate(Pages.AutorizationUser(LoginUser.Text, PasswordUser.Text));
         }
     }
 }

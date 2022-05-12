@@ -12,11 +12,11 @@ namespace AdminDayAndNight.BD
     using System;
     using System.Collections.Generic;
     
-    public partial class blocking
+    public partial class blocking_user
     {
-        public int id { get; set; }
-        public System.DateTime block_time { get; set; }
-        public string block_user { get; set; }
+        public int sloppy_user { get; set; }
+        public System.DateTime date_block { get; set; }
+        public Nullable<int> count_block { get; set; }
     
         public virtual user user { get; set; }
     }

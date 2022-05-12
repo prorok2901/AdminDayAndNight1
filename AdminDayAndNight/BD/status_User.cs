@@ -20,7 +20,7 @@ namespace AdminDayAndNight.BD
             this.user = new HashSet<user>();
         }
     
-        public string name { get; set; }
+        public string starus_name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<user> user { get; set; }

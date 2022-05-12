@@ -13,10 +13,10 @@ namespace AdminDayAndNight.BD
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DayAndnightEntities : DbContext
+    public partial class DayAndNightEntities : DbContext
     {
-        public DayAndnightEntities()
-            : base("name=DayAndnightEntities")
+        public DayAndNightEntities()
+            : base("name=DayAndNightEntities")
         {
         }
     
@@ -25,14 +25,15 @@ namespace AdminDayAndNight.BD
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<blocking_user> blocking_user { get; set; }
         public virtual DbSet<booking_history> booking_history { get; set; }
         public virtual DbSet<borrow_room> borrow_room { get; set; }
         public virtual DbSet<client> client { get; set; }
         public virtual DbSet<info_room> info_room { get; set; }
         public virtual DbSet<role> role { get; set; }
         public virtual DbSet<status_user> status_user { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<type_room> type_room { get; set; }
         public virtual DbSet<user> user { get; set; }
-        public virtual DbSet<blocking> blocking { get; set; }
     }
 }

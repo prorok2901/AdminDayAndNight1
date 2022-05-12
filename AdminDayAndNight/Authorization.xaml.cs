@@ -17,16 +17,23 @@ namespace AdminDayAndNight
 {
     public partial class Authorization : Page
     {
+        static string allowChar = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890";
+        public Authorization(string _login, string _password)
+        {
+            InitializeComponent();
+            LoginUser.Text = _login;
+            PasswordUser.Text = _password;
+        }
+
+        string pwd = "";
         public Authorization()
         {
             InitializeComponent();
         }
+        
 
         private void CreateCaptcha()
         {
-            string allowChar = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890";
-            string pwd = "";
-
             Random random = new Random();
             for (int i = 0; i < 5; i++)
             {
@@ -41,8 +48,7 @@ namespace AdminDayAndNight
             {
                 if(captcha.Text == ValidateCaptcha.Text)
                 {
-                    Home home = Pages.HomeUser();
-                    NavigationService.Navigate(home);
+                    NavigationService.Navigate(Pages.HomeUser());
                 }
                 else
                 {
@@ -55,6 +61,11 @@ namespace AdminDayAndNight
         {
             CreateCaptcha();
             CapTcha.Visibility = Visibility.Visible;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(Pages.RegistrationUser());
         }
     }
 }

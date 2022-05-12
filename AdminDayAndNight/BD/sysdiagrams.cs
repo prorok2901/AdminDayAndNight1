@@ -12,12 +12,12 @@ namespace AdminDayAndNight.BD
     using System;
     using System.Collections.Generic;
     
-    public partial class booking_history
+    public partial class sysdiagrams
     {
-        public int id { get; set; }
-        public int borrow_room { get; set; }
-        public System.DateTime date_departure { get; set; }
-    
-        public virtual borrow_room borrow_room1 { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

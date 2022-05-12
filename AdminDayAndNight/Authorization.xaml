@@ -9,18 +9,19 @@
       Title="Authorization">
 
     <Grid>
-        <TextBox Margin="563,0,23,381" Height="41" VerticalAlignment="Bottom"/>
-        <TextBox Margin="563,0,23,335" Height="41" VerticalAlignment="Bottom"/>
-        
-        <Button Margin="570,126,30,276" Content="Войти" Click="Button_Click"/>
-        <Button Margin="570,179,30,238" Content="Зарегистрироваться"/>
-        
-        <Border x:Name="CapTcha" Margin="153,0,324,225" Height="197" VerticalAlignment="Bottom" Visibility="Hidden">
+        <TextBox x:Name="LoginUser" Margin="564,16,0,0" Height="41" VerticalAlignment="Top" HorizontalAlignment="Left" Width="214"/>
+        <TextBox x:Name="PasswordUser" Margin="564,62,0,0" Height="41" VerticalAlignment="Top" HorizontalAlignment="Left" Width="214"/>
+
+        <Button Margin="593,114,0,0" Content="Войти" Click="Button_Click" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="156" FontSize="16"/>
+        <Button Margin="606,149,0,0" Content="Зарегистрироваться" Height="29" VerticalAlignment="Top" HorizontalAlignment="Left" Width="130" Click="Button_Click_1"/>
+
+        <Border x:Name="CapTcha" Margin="265,0,324,225" Height="163" VerticalAlignment="Bottom" CornerRadius="13" Background="#baac8b" Visibility="Hidden">
             <Grid>
-                <TextBlock x:Name="captcha" Margin="36,26,37,110"/>
-                <TextBox x:Name="ValidateCaptcha" Margin="36,98,37,33" KeyDown="TextBox_KeyDown" />
+                <TextBlock Text="Вы человек?" Margin="36,10,37,123" FontFamily="Verdana" FontSize="18"/>
+                <TextBlock x:Name="captcha" Margin="36,45,37,70" FontFamily="Ink Free" FontSize="24" FontStyle="Italic" Foreground="Red" TextAlignment="Center"/>
+                <TextBox x:Name="ValidateCaptcha" Margin="36,98,37,17" KeyDown="TextBox_KeyDown" Background="Transparent" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderThickness="0,0,0,1" FontSize="18"/>
             </Grid>
         </Border>
-       
+
     </Grid>
 </Page>

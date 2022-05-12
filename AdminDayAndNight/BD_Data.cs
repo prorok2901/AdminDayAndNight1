@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace AdminDayAndNight
 {
     internal class BD_Data
     {
-        static BD.DayAndnightEntities basa = new BD.DayAndnightEntities();
+        private static BD.DayAndNightEntities basa = new BD.DayAndNightEntities();
 
-        static BD.status_user status = new BD.status_user();
-        static BD.user user = new BD.user();
-        static BD.booking_history booking = new BD.booking_history();
-        static BD.borrow_room borrow = new BD.borrow_room();
-        static BD.info_room room = new BD.info_room();
-        static BD.role role = new BD.role();
+        private static BD.status_user status = new BD.status_user();
+        private static BD.user user = new BD.user();
+        private static BD.booking_history booking = new BD.booking_history();
+        private static BD.borrow_room borrow = new BD.borrow_room();
+        private static BD.info_room room = new BD.info_room();
+        private static BD.role role = new BD.role();
 
-        public static BD.DayAndnightEntities DataBase()
+        public static BD.DayAndNightEntities DataBase()
         {
             return basa;
         }
@@ -48,9 +49,30 @@ namespace AdminDayAndNight
     }
     class Pages
     {
-        public static Registration_S_User registration = new Registration_S_User();
-        public static Authorization authorization = new Authorization();
-        public static Home HomE = new Home();
+        private static Registration_S_User registration = new Registration_S_User();
+        private static Authorization authorization = new Authorization();
+        private static Home HomE = new Home();
+
+        public static Registration_S_User RegistrationUser()
+        {
+            return registration;
+        }
+        public static Registration_S_User RegistrationUser(Grid grid, System.Windows.Media.ImageBrush startImage)
+        {
+            return registration = new Registration_S_User(grid, startImage);
+        }
+        public static Authorization AutorizationUser()
+        {
+            return authorization;
+        }
+        public static Authorization AutorizationUser(string login, string password)
+        {
+            return authorization = new Authorization(login,password);
+        }
+        public static Home HomeUser()
+        {
+            return HomE;
+        }
 
     }
 }
