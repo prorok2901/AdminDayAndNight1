@@ -9,6 +9,32 @@
       Title="Home">
 
     <Grid>
-        
+        <TabControl BorderThickness="0" Background="Transparent">
+
+            <TabItem Header="Управление пользователем" Margin="14,34,-67,-48">
+                <Grid Background="Transparent" Margin="246,0,0,0">
+                    <TabControl BorderThickness="0" Background="Transparent">
+
+                        <TabItem Header="Нанять поззователя" Margin="14,34,-34,-36">
+                            <Grid Background="Transparent" Margin="171,-21,0,0">
+
+                            </Grid>
+                        </TabItem>
+
+                        <TabItem Header="Уволить пользователя" Margin="-109,74,101,-76">
+                            <Grid Background="Transparent" Margin="171,-21,0,0">
+
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Управление комнатами" Margin="-149,102,75,-114">
+                <Grid Background="Transparent" Margin="246,0,0,0">
+                    
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Page>
