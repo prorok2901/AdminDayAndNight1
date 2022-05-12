@@ -24,16 +24,15 @@ namespace AdminDayAndNight
             LoginUser.Text = _login;
             PasswordUser.Text = _password;
         }
-
-        string pwd = "";
         public Authorization()
         {
             InitializeComponent();
         }
-        
+
 
         private void CreateCaptcha()
         {
+            string pwd = "";
             Random random = new Random();
             for (int i = 0; i < 5; i++)
             {
@@ -44,9 +43,9 @@ namespace AdminDayAndNight
 
         private void TextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.Key == Key.Enter)
+            if (e.Key == Key.Enter)
             {
-                if(captcha.Text == ValidateCaptcha.Text)
+                if (captcha.Text == ValidateCaptcha.Text)
                 {
                     NavigationService.Navigate(Pages.HomeUser());
                 }
@@ -59,8 +58,16 @@ namespace AdminDayAndNight
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            CreateCaptcha();
-            CapTcha.Visibility = Visibility.Visible;
+            if(LoginUser !=null && PasswordUser != null)
+            {
+                var user = BD_Data.DataBase().user.FirstOrDefault(a => a.login == LoginUser.Text && a.password == PasswordUser.Text);
+                if (user != null)
+                {
+                    CreateCaptcha();
+                    CapTcha.Visibility = Visibility.Visible;
+                }
+            }
+            return;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

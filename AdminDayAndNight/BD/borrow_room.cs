@@ -23,7 +23,7 @@ namespace AdminDayAndNight.BD
         public int id { get; set; }
         public int room { get; set; }
         public string client { get; set; }
-        public int administrator { get; set; }
+        public string administrator { get; set; }
         public string status { get; set; }
         public int count_day { get; set; }
         public System.DateTime date_settlement { get; set; }

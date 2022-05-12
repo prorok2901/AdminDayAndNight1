@@ -25,7 +25,6 @@ namespace AdminDayAndNight.BD
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<blocking_user> blocking_user { get; set; }
         public virtual DbSet<booking_history> booking_history { get; set; }
         public virtual DbSet<borrow_room> borrow_room { get; set; }
         public virtual DbSet<client> client { get; set; }
@@ -35,5 +34,6 @@ namespace AdminDayAndNight.BD
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<type_room> type_room { get; set; }
         public virtual DbSet<user> user { get; set; }
+        public virtual DbSet<blocking> blocking { get; set; }
     }
 }
