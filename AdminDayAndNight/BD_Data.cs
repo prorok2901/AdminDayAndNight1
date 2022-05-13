@@ -9,6 +9,7 @@ namespace AdminDayAndNight
 {
     internal class BD_Data
     {
+
         private static BD.DayAndNightEntities basa = new BD.DayAndNightEntities();
 
         private static BD.status_user status = new BD.status_user();

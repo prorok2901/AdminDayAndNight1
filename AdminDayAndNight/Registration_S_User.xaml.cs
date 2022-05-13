@@ -69,7 +69,7 @@ namespace AdminDayAndNight
                 if (grid.Visibility != Visibility.Hidden)
                 {
                     grid.Visibility = Visibility.Hidden;
-                    image.ImageSource = new BitmapImage(new Uri(@"C:\Users\student\Source\Repos\prorok2901\AdminDayAndNight1\AdminDayAndNight\Image\fsdfgh1.png")); ;
+                    image.ImageSource = new BitmapImage(new Uri(@"C:\Users\proro\Source\Repos\prorok2901\AdminDayAndNight1\AdminDayAndNight\Image\fsdfgh1.png"));
                 }
 
                 BD_Data.DataBase().user.Add(SuperUser);

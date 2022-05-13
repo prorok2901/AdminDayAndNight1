@@ -17,21 +17,22 @@ namespace AdminDayAndNight.BD
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public user()
         {
-            this.borrow_room = new HashSet<borrow_room>();
             this.blocking = new HashSet<blocking>();
+            this.borrow_room = new HashSet<borrow_room>();
         }
     
-        public string login { get; set; }
+        public int id { get; set; }
         public string name { get; set; }
         public string role { get; set; }
         public string user_status { get; set; }
         public string password { get; set; }
+        public string login { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<blocking> blocking { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<borrow_room> borrow_room { get; set; }
         public virtual role role1 { get; set; }
         public virtual status_user status_user { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<blocking> blocking { get; set; }
     }
 }

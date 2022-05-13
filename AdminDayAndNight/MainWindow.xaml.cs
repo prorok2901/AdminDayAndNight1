@@ -21,7 +21,7 @@ namespace AdminDayAndNight
             {
                 Opupet.Navigate(Pages.RegistrationUser(FirstStart, StartImage));
                 FirstStart.Visibility = Visibility.Visible;
-                StartImage.ImageSource = new BitmapImage(new Uri(@"C:\Users\student\Source\Repos\prorok2901\AdminDayAndNight1\AdminDayAndNight\Image\First_Start.png"));
+                StartImage.ImageSource = new BitmapImage(new Uri(@"C:\Users\proro\Source\Repos\prorok2901\AdminDayAndNight1\AdminDayAndNight\Image\First_Start.png"));
             }
             else
             {

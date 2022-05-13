@@ -51,6 +51,7 @@ namespace AdminDayAndNight
                 }
                 else
                 {
+                    captcha.Text = "";
                     CreateCaptcha();
                 }
             }

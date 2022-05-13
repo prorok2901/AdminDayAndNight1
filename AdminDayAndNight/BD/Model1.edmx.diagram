@@ -4,25 +4,25 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4de60f0e441d4b21afd7250cb0afb1fa" Name="Diagram1">
-        <EntityTypeShape EntityType="group363_06Model.booking_history" Width="1.5" PointX="7.5" PointY="4.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="group363_06Model.borrow_room" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="group363_06Model.client" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="group363_06Model.info_room" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="group363_06Model.role" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="group363_06Model.status_user" Width="1.5" PointX="0.75" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="group363_06Model.sysdiagrams" Width="1.5" PointX="7.75" PointY="7.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="group363_06Model.type_room" Width="1.5" PointX="0.75" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="group363_06Model.user" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="group363_06Model.blocking" Width="1.5" PointX="5.25" PointY="8.25" IsExpanded="true" />
-        <AssociationConnector Association="group363_06Model.FK_booking_history_borrow_room" ManuallyRouted="false" />
-        <AssociationConnector Association="group363_06Model.borrow_room_fk0" ManuallyRouted="false" />
-        <AssociationConnector Association="group363_06Model.borrow_room_fk1" ManuallyRouted="false" />
-        <AssociationConnector Association="group363_06Model.FK_borrow_room_user" ManuallyRouted="false" />
-        <AssociationConnector Association="group363_06Model.FK_info_room_type_room" ManuallyRouted="false" />
-        <AssociationConnector Association="group363_06Model.FK_user_role" ManuallyRouted="false" />
-        <AssociationConnector Association="group363_06Model.FK_user_status_User" ManuallyRouted="false" />
-        <AssociationConnector Association="group363_06Model.FK_blocking_user" ManuallyRouted="false" />
+      <Diagram DiagramId="278755ab9f2c40b18be9efcba906a93d" Name="Diagram1">
+        <EntityTypeShape EntityType="DayAndNightModel.blocking" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayAndNightModel.booking_history" Width="1.5" PointX="10.5" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayAndNightModel.borrow_room" Width="1.5" PointX="8.25" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayAndNightModel.client" Width="1.5" PointX="6" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayAndNightModel.info_room" Width="1.5" PointX="6" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayAndNightModel.role" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayAndNightModel.status_user" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayAndNightModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayAndNightModel.type_room" Width="1.5" PointX="3.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayAndNightModel.user" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
+        <AssociationConnector Association="DayAndNightModel.FK_blocking_user" ManuallyRouted="false" />
+        <AssociationConnector Association="DayAndNightModel.FK_booking_history_borrow_room" ManuallyRouted="false" />
+        <AssociationConnector Association="DayAndNightModel.borrow_room_fk0" ManuallyRouted="false" />
+        <AssociationConnector Association="DayAndNightModel.borrow_room_fk1" ManuallyRouted="false" />
+        <AssociationConnector Association="DayAndNightModel.FK_borrow_room_user" ManuallyRouted="false" />
+        <AssociationConnector Association="DayAndNightModel.info_room_fk0" ManuallyRouted="false" />
+        <AssociationConnector Association="DayAndNightModel.FK_user_role" ManuallyRouted="false" />
+        <AssociationConnector Association="DayAndNightModel.FK_user_status_user" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
