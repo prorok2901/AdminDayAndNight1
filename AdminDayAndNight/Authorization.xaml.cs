@@ -32,6 +32,7 @@ namespace AdminDayAndNight
 
         private void CreateCaptcha()
         {
+            ValidateCaptcha.Text = "";
             string pwd = "";
             Random random = new Random();
             for (int i = 0; i < 5; i++)
@@ -51,7 +52,6 @@ namespace AdminDayAndNight
                 }
                 else
                 {
-                    captcha.Text = "";
                     CreateCaptcha();
                 }
             }

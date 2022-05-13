@@ -111,9 +111,6 @@
     <Compile Include="BD\status_user.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="BD\sysdiagrams.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="BD\type_room.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

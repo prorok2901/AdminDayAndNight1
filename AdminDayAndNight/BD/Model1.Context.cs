@@ -32,7 +32,6 @@ namespace AdminDayAndNight.BD
         public virtual DbSet<info_room> info_room { get; set; }
         public virtual DbSet<role> role { get; set; }
         public virtual DbSet<status_user> status_user { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<type_room> type_room { get; set; }
         public virtual DbSet<user> user { get; set; }
     }
