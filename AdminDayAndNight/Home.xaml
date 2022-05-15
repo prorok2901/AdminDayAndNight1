@@ -13,7 +13,7 @@
             <TabItem Header="Управление пользователем" Margin="0,42,-8,-56" HorizontalAlignment="Right" Width="171">
                 <Grid>
 
-                    <TabControl Background="Transparent" BorderBrush="Transparent" Margin="-20,-14,0,10">
+                    <TabControl Background="Transparent" BorderBrush="Transparent" Margin="0,-14,0,10">
                         <TabItem Margin="0,21,-188,-25" Header="Пользователи" HorizontalAlignment="Right" Width="131">
                             <Border Height="348" Margin="225,0,0,0">
                                 <Grid Background="Transparent" Margin="-1,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Height="348" Width="566">
@@ -28,7 +28,7 @@
                                             <TextBox Text="Имя" Margin="10,32,0,269" HorizontalAlignment="Left" Width="307"/>
                                             <TextBox Text="Логин Работника" Margin="10,88,0,214" HorizontalAlignment="Left" Width="307"/>
 
-                                            <TextBlock Text="Роль пользователя:" Margin="24,203,187,103"/>
+                                            <TextBlock Text="Роль пользователя:" Margin="42,203,168,103"/>
                                             <ComboBox Margin="176,203,0,103" HorizontalAlignment="Left" Width="144"/>
 
                                             <TextBlock Text="Статус пользователя:" Margin="32,243,179,78"/>
@@ -109,7 +109,7 @@
                                             <TextBox Margin="270,0,0,250" HorizontalAlignment="Left" Width="46" Height="33" VerticalAlignment="Bottom"/>
                                             <TextBox Margin="118,0,0,250" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="44"/>
 
-                                            <TextBlock Text="Краткое описание" Margin="14,130,0,0" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Width="338" />
+                                            <TextBlock Text="Краткое описание" Margin="0,91,0,0" Height="90" VerticalAlignment="Top" HorizontalAlignment="Center" Width="338" />
                                             <ComboBox Margin="121,0,0,209" HorizontalAlignment="Left" Width="233" Height="35" VerticalAlignment="Bottom"/>
 
                                             <TextBlock Margin="20,0,0,257" Text="Номер комнаты" RenderTransformOrigin="0.5,0.5" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="98"/>

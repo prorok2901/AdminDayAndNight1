@@ -108,6 +108,9 @@
     <Compile Include="BD\role.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="BD\status_room.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="BD\status_user.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
