@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище DayAndNightModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище DayAndNightModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="blocking">
           <Key>
             <PropertyRef Name="id" />
@@ -51,9 +51,16 @@
           <Property Name="capacity" Type="int" Nullable="false" />
           <Property Name="type_room" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="chort_description" Type="varchar" MaxLength="255" />
-          <Property Name="price" Type="money" />
+          <Property Name="price" Type="money" Nullable="false" />
+          <Property Name="status_room" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="status_room">
           <Key>
             <PropertyRef Name="name" />
           </Key>
@@ -142,6 +149,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_info_room_status_room">
+          <End Role="status_room" Type="Self.status_room" Multiplicity="1" />
+          <End Role="info_room" Type="Self.info_room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status_room">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="info_room">
+              <PropertyRef Name="status_room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_user_role">
           <End Role="role" Type="Self.role" Multiplicity="1" />
           <End Role="user" Type="Self.user" Multiplicity="*" />
@@ -185,6 +204,7 @@
           <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="info_room" EntityType="Self.info_room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="status_room" EntityType="Self.status_room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="status_user" EntityType="Self.status_user" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="type_room" EntityType="Self.type_room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
@@ -208,6 +228,10 @@
             <End Role="user" EntitySet="user" />
             <End Role="borrow_room" EntitySet="borrow_room" />
           </AssociationSet>
+          <AssociationSet Name="FK_info_room_status_room" Association="Self.FK_info_room_status_room">
+            <End Role="status_room" EntitySet="status_room" />
+            <End Role="info_room" EntitySet="info_room" />
+          </AssociationSet>
           <AssociationSet Name="FK_user_role" Association="Self.FK_user_role">
             <End Role="role" EntitySet="role" />
             <End Role="user" EntitySet="user" />
@@ -221,8 +245,7 @@
             <End Role="info_room" EntitySet="info_room" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DayAndNightModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -279,9 +302,11 @@
           <Property Name="capacity" Type="Int32" Nullable="false" />
           <Property Name="type_room" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="chort_description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <NavigationProperty Name="borrow_room" Relationship="Self.borrow_room_fk0" FromRole="info_room" ToRole="borrow_room" />
           <NavigationProperty Name="type_room1" Relationship="Self.info_room_fk0" FromRole="info_room" ToRole="type_room" />
+          <Property Name="status_room" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="status_room1" Relationship="DayAndNightModel.FK_info_room_status_room" FromRole="info_room" ToRole="status_room" />
         </EntityType>
         <EntityType Name="role">
           <Key>
@@ -457,7 +482,31 @@
             <End Role="status_user" EntitySet="status_user" />
             <End Role="user" EntitySet="user" />
           </AssociationSet>
+          <EntitySet Name="status_room" EntityType="DayAndNightModel.status_room" />
+          <AssociationSet Name="FK_info_room_status_room" Association="DayAndNightModel.FK_info_room_status_room">
+            <End Role="status_room" EntitySet="status_room" />
+            <End Role="info_room" EntitySet="info_room" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="status_room">
+          <Key>
+            <PropertyRef Name="name" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="info_room" Relationship="DayAndNightModel.FK_info_room_status_room" FromRole="status_room" ToRole="info_room" />
+        </EntityType>
+        <Association Name="FK_info_room_status_room">
+          <End Type="DayAndNightModel.status_room" Role="status_room" Multiplicity="1" />
+          <End Type="DayAndNightModel.info_room" Role="info_room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status_room">
+              <PropertyRef Name="name" />
+            </Principal>
+            <Dependent Role="info_room">
+              <PropertyRef Name="status_room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -508,6 +557,7 @@
           <EntitySetMapping Name="info_room">
             <EntityTypeMapping TypeName="DayAndNightModel.info_room">
               <MappingFragment StoreEntitySet="info_room">
+                <ScalarProperty Name="status_room" ColumnName="status_room" />
                 <ScalarProperty Name="num_room" ColumnName="num_room" />
                 <ScalarProperty Name="count_room" ColumnName="count_room" />
                 <ScalarProperty Name="capacity" ColumnName="capacity" />
@@ -547,6 +597,13 @@
                 <ScalarProperty Name="user_status" ColumnName="user_status" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="login" ColumnName="login" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="status_room">
+            <EntityTypeMapping TypeName="DayAndNightModel.status_room">
+              <MappingFragment StoreEntitySet="status_room">
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

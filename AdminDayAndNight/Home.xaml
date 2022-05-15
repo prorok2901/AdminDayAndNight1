@@ -11,89 +11,171 @@
         <TabControl BorderThickness="0" Background="Transparent" Height="450" VerticalAlignment="Top" HorizontalAlignment="Center" Width="800">
 
             <TabItem Header="Управление пользователем" Margin="0,42,-8,-56" HorizontalAlignment="Right" Width="171">
-                <Grid Background="Transparent" Margin="0,0,6,0" VerticalAlignment="Top" HorizontalAlignment="Right" Height="426" Width="566">
-                    <ListBox x:Name="UserList" Margin="10,0,0,82" HorizontalAlignment="Left" Width="183" Height="337" VerticalAlignment="Bottom">
+                <Grid>
 
-                    </ListBox>
-                    <Button Margin="0,0,398,47" Content="Нанять работника" HorizontalAlignment="Right" Width="132" Height="30" VerticalAlignment="Bottom"/>
-
-                    <Border Margin="200,0,0,47" CornerRadius="13" Background="#F5DEB3" Height="372" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="332">
-                        <Grid Margin="0,0,0,21">
-
-                            <TextBox Text="Имя" Margin="10,0,0,309" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="307"/>
-                            <TextBox Text="Логин Работника" Margin="10,0,0,256" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="307"/>
-
-                            <TextBlock Text="Роль пользователя:" Margin="24,212,187,116"/>
-                            <ComboBox Margin="178,212,0,0" HorizontalAlignment="Left" Width="144" Height="34" VerticalAlignment="Top"/>
-
-                            <TextBlock Text="Статус пользователя:" Margin="24,278,187,53"/>
-                            <ComboBox HorizontalAlignment="Left" Width="144" Height="34" VerticalAlignment="Top" Margin="178,270,0,0"/>
-
-
-                            <TextBox x:Name="password_user" Text="Пароль работника" Margin="10,0,0,194" Height="37" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="307"/>
-
-                            <Button Margin="168,314,26,10" Content="Изменить"/>
-                            <Button Margin="24,0,0,10" Content="Уволить" Grid.Column="1" HorizontalAlignment="Left" Width="131" Height="27" VerticalAlignment="Bottom"/>
-
-                        </Grid>
-                    </Border>
-                </Grid>
-            </TabItem>
-
-            <TabItem Header="Управление комнатами" Margin="-163,102,133,-114">
-                <Grid Background="Transparent" Margin="208,0,0,0" HorizontalAlignment="Left" Width="588" Height="410">
                     <TabControl Background="Transparent" BorderBrush="Transparent" Margin="-20,-14,0,10">
-                        <TabItem Margin="0,19,-24,-23" Header="Номера отеля" HorizontalAlignment="Right" Width="131">
-                            <Border Height="383" Margin="4,0,6,0">
-                                <Grid>
-                                    <ListBox x:Name="NumberHotelList" Margin="20,38,0,0" Height="266" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132">
+                        <TabItem Margin="0,21,-188,-25" Header="Пользователи" HorizontalAlignment="Right" Width="131">
+                            <Border Height="348" Margin="225,0,0,0">
+                                <Grid Background="Transparent" Margin="-1,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Left" Height="348" Width="566">
+                                    <ListBox x:Name="UserList" Margin="10,0,0,45" HorizontalAlignment="Left" Width="183" Height="297" VerticalAlignment="Bottom">
 
                                     </ListBox>
-                                    <Button Height="30" Margin="0,318,440,0" Content="Создать номер" VerticalAlignment="Top" HorizontalAlignment="Right" Width="132"/>
+                                    <Button Margin="0,0,398,10" Content="Нанять работника" HorizontalAlignment="Right" Width="132" Height="30" VerticalAlignment="Bottom"/>
 
-                                    <Border Margin="191,22,0,0" CornerRadius="13" Background="#F5DEB3" Height="337" VerticalAlignment="Top" HorizontalAlignment="Left" Width="358">
+                                    <Border Margin="210,0,0,0" CornerRadius="13" Background="#F5DEB3" Height="336" VerticalAlignment="Center" HorizontalAlignment="Left" Width="332">
                                         <Grid>
-                                            <TextBox Margin="264,0,0,298" HorizontalAlignment="Left" Width="46" Height="33" VerticalAlignment="Bottom"/>
-                                            <TextBox Margin="112,0,0,298" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="44"/>
 
-                                            <TextBlock Text="Краткое описание" Margin="14,103,0,0" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Width="338" />
-                                            <ComboBox Margin="115,0,0,257" HorizontalAlignment="Left" Width="233" Height="35" VerticalAlignment="Bottom"/>
+                                            <TextBox Text="Имя" Margin="10,32,0,269" HorizontalAlignment="Left" Width="307"/>
+                                            <TextBox Text="Логин Работника" Margin="10,88,0,214" HorizontalAlignment="Left" Width="307"/>
 
-                                            <TextBlock Margin="14,0,0,305" Text="Номер комнаты" RenderTransformOrigin="0.5,0.5" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="98"/>
-                                            <TextBlock Margin="174,0,0,303" Text="Вместимость" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="86" Height="22" VerticalAlignment="Bottom"/>
-                                            <TextBlock Margin="18,0,0,265" Text="Тип комнаты" RenderTransformOrigin="0.5,0.5" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="77"/>
+                                            <TextBlock Text="Роль пользователя:" Margin="24,203,187,103"/>
+                                            <ComboBox Margin="176,203,0,103" HorizontalAlignment="Left" Width="144"/>
 
-                                            <TextBlock Margin="185,0,0,86" Text ="Цена" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="63"/>
-                                            <TextBox Margin="248,0,0,86" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100"/>
+                                            <TextBlock Text="Статус пользователя:" Margin="32,243,179,78"/>
+                                            <ComboBox HorizontalAlignment="Left" Width="144" Margin="176,239,0,74"/>
 
-                                            <TextBlock Margin="16,0,0,86" Text ="Кол-во комнат" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="97"/>
-                                            <TextBox Margin="113,0,0,86" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="40"/>
 
-                                            <TextBlock Margin="16,0,0,124" Text ="Статус комнаты" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="97"/>
-                                            <ComboBox Margin="112,0,0,124" HorizontalAlignment="Left" Width="236" Height="33" VerticalAlignment="Bottom"/>
+                                            <TextBox x:Name="password_user" Text="Пароль работника" Margin="10,151,0,151" HorizontalAlignment="Left" Width="307"/>
 
-                                            <Button Margin="36,0,0,24" Content="Изменить" HorizontalAlignment="Left" Width="130" Height="27" VerticalAlignment="Bottom"/>
-                                            <Button Margin="216,0,0,24" Content="Удалить" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="132"/>
+                                            <Button Margin="176,291,18,22" Content="Изменить"/>
+                                            <Button Margin="32,291,0,22" Content="Уволить" HorizontalAlignment="Left" Width="132"/>
+
                                         </Grid>
                                     </Border>
                                 </Grid>
                             </Border>
 
                         </TabItem>
+
+
+                        <TabItem Margin="194,21,-219,-25" Header="Статус пользователя">
+                            <Border Height="338" Margin="241,0,6,0">
+                                <Grid Background="Transparent">
+                                    <ListBox x:Name="StatusList" Height="49" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="314" Margin="0,0,239,229"/>
+                                    <Button Height="30" Margin="0,0,56,238" Content="Добавить статус" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="132" Click="Button_Click"/>
+
+                                    <Border Margin="10,126,41,53" CornerRadius="13" Background="#F5DEB3">
+                                        <Grid>
+                                            <TextBlock Text="Введите название нового статуса пользователя:" Margin="10,34,234,95"/>
+                                            <TextBox Margin="294,30,0,0" Height="37" VerticalAlignment="Top" HorizontalAlignment="Left" Width="208"/>
+
+                                            <Button Content="Изменить" Height="33" VerticalAlignment="Top" HorizontalAlignment="Left" Width="216" Margin="40,108,0,0"/>
+                                            <Button Content="Удалить" Margin="294,107,10,18"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Border>
+
+                        </TabItem>
+
+                        <TabItem Margin="226,21,-252,-25" Header="Роль пользователя">
+
+                            <Grid Background="Transparent" Margin="221,0,25,0" Width="550">
+                                <ListBox x:Name="RoleList" Margin="0,0,239,279" Height="49" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="301"/>
+                                <Button Height="30" Margin="0,0,54,293" Content="Добавить роль" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="132"/>
+
+                                <Border Margin="10,137,41,49" CornerRadius="13" Background="#F5DEB3">
+                                    <Grid>
+                                        <TextBlock Text="Введите название новой роли пользователя:" Margin="35,18,214,168"/>
+                                        <TextBox Margin="294,14,0,0" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="170"/>
+                                        <TextBox Margin="35,71,35,63" Text="Краткое описание полномочий роли"/>
+
+                                        <Button Content="Изменить" Margin="48,167,0,0" Height="37" VerticalAlignment="Top" HorizontalAlignment="Left" Width="202"/>
+                                        <Button Content="Удалить" Margin="269,167,35,10"/>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+
+                        </TabItem>
+
                     </TabControl>
+
                 </Grid>
             </TabItem>
-            <TabItem Header="Управление ролями" Margin="-304,154,256,-166">
-                <Grid Background="Transparent" Margin="221,0,25,0" Width="550">
-                    <ListBox x:Name="RoleList" Margin="0,0,239,278" Height="136" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="301"/>
-                    <Button Height="30" Margin="0,0,41,331" Content="Добавить роль" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="132"/>
 
-                    <Border Margin="10,151,41,61" CornerRadius="13" Background="#F5DEB3">
-                        <Grid>
-                            <TextBox Text="Введите название новой роли пользователя" Margin="0,57,0,0" Height="49" VerticalAlignment="Top" HorizontalAlignment="Center" Width="278"/>
-                            <Button Content="Изменить" Margin="0,165,0,0" Height="37" VerticalAlignment="Top" HorizontalAlignment="Center" Width="216"/>
-                        </Grid>
-                    </Border>
+            <TabItem Header="Управление комнатами" Margin="-163,102,133,-114">
+                <Grid Background="Transparent" Margin="208,0,0,0" HorizontalAlignment="Left" Width="588" Height="410">
+                    <TabControl Background="Transparent" BorderBrush="Transparent" Margin="-20,-14,0,10">
+                        <TabItem Margin="0,12,-35,-20" Header="Номера отеля" HorizontalAlignment="Right" Width="131">
+                            <Border Height="338" Margin="16,0,6,0">
+                                <Grid>
+                                    <ListBox x:Name="NumberHotelList" Margin="21,20,0,0" Height="266" VerticalAlignment="Top" HorizontalAlignment="Left" Width="132">
+
+                                    </ListBox>
+                                    <Button Height="30" Margin="0,291,427,0" Content="Создать номер" VerticalAlignment="Top" HorizontalAlignment="Right" Width="132"/>
+
+                                    <Border Margin="191,0,0,0" CornerRadius="13" Background="#F5DEB3" Height="299" VerticalAlignment="Center" HorizontalAlignment="Left" Width="358">
+                                        <Grid>
+                                            <TextBox Margin="270,0,0,250" HorizontalAlignment="Left" Width="46" Height="33" VerticalAlignment="Bottom"/>
+                                            <TextBox Margin="118,0,0,250" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="44"/>
+
+                                            <TextBlock Text="Краткое описание" Margin="14,130,0,0" Height="90" VerticalAlignment="Top" HorizontalAlignment="Left" Width="338" />
+                                            <ComboBox Margin="121,0,0,209" HorizontalAlignment="Left" Width="233" Height="35" VerticalAlignment="Bottom"/>
+
+                                            <TextBlock Margin="20,0,0,257" Text="Номер комнаты" RenderTransformOrigin="0.5,0.5" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="98"/>
+                                            <TextBlock Margin="180,0,0,255" Text="Вместимость" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Left" Width="86" Height="22" VerticalAlignment="Bottom"/>
+                                            <TextBlock Margin="24,0,0,217" Text="Тип комнаты" RenderTransformOrigin="0.5,0.5" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="77"/>
+
+                                            <TextBlock Margin="189,0,0,42" Text ="Цена" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="63"/>
+                                            <TextBox Margin="252,0,0,42" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100"/>
+
+                                            <TextBlock Margin="20,0,0,42" Text ="Кол-во комнат" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="97"/>
+                                            <TextBox Margin="117,0,0,42" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="40"/>
+
+                                            <TextBlock Margin="20,0,0,80" Text ="Статус комнаты" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="97"/>
+                                            <ComboBox Margin="116,0,0,80" HorizontalAlignment="Left" Width="236" Height="33" VerticalAlignment="Bottom"/>
+
+                                            <Button Margin="24,0,0,10" Content="Изменить" HorizontalAlignment="Left" Width="130" Height="27" VerticalAlignment="Bottom"/>
+                                            <Button Margin="204,0,0,10" Content="Удалить" Height="27" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="132"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Border>
+
+                        </TabItem>
+
+
+                        <TabItem Margin="0,12,-42,-19" Header="Статус номера" HorizontalAlignment="Right" Width="131">
+                            <Border Height="338" Margin="16,0,6,0">
+                                <Grid Background="Transparent" Width="550">
+                                    <ListBox x:Name="StatusRoomList" Height="49" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="301" Margin="0,0,239,229"/>
+                                    <Button Height="30" Margin="0,0,56,238" Content="Добавить статус" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="132"/>
+
+                                    <Border Margin="10,126,41,53" CornerRadius="13" Background="#F5DEB3">
+                                        <Grid>
+                                            <TextBlock Text="Введите название нового статуса комнаты" Margin="10,36,239,100"/>
+                                            <TextBox Margin="255,23,0,0" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="234"/>
+
+                                            <Button Content="Удалить" Margin="255,97,54,28"/>
+                                            <Button Content="Изменить" Height="33" VerticalAlignment="Top" HorizontalAlignment="Left" Width="216" Margin="34,98,0,0"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Border>
+
+                        </TabItem>
+
+                        <TabItem Margin="50,13,-83,-19" Header="Тип комнаты">
+                            <Border Height="338" Margin="16,0,6,0">
+                                <Grid Background="Transparent" Width="550">
+                                    <ListBox x:Name="TypeRoomList" Height="49" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="301" Margin="0,0,239,229"/>
+                                    <Button Height="30" Margin="0,0,54,238" Content="Добавить тип номера" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="132"/>
+
+                                    <Border Margin="10,126,41,53" CornerRadius="13" Background="#F5DEB3">
+                                        <Grid>
+                                            <TextBlock x:Name="DescriptionAction" Text="Введите название нового типа комнаты" Margin="10,35,263,100"/>
+                                            <TextBox x:Name ="NameRole"  Margin="255,23,0,0" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="231"/>
+
+                                            <Button x:Name="ButtonDeleteRole" Content="Удалить" Margin="255,97,54,28"/>
+                                            <Button x:Name="ButtonChangeRole" Content="Изменить" Height="33" VerticalAlignment="Top" HorizontalAlignment="Left" Width="216" Margin="34,98,0,0"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                            </Border>
+                        </TabItem>
+
+                    </TabControl>
+
                 </Grid>
             </TabItem>
 

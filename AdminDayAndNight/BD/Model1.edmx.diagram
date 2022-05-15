@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="278755ab9f2c40b18be9efcba906a93d" Name="Diagram1" ZoomLevel="74">
-        <EntityTypeShape EntityType="DayAndNightModel.blocking" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+      <Diagram DiagramId="278755ab9f2c40b18be9efcba906a93d" Name="Diagram1" ZoomLevel="95">
+        <EntityTypeShape EntityType="DayAndNightModel.blocking" Width="1.5" PointX="5.125" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DayAndNightModel.booking_history" Width="1.5" PointX="7.5" PointY="4" IsExpanded="true" />
         <EntityTypeShape EntityType="DayAndNightModel.borrow_room" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DayAndNightModel.client" Width="1.5" PointX="7.5" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="DayAndNightModel.info_room" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="DayAndNightModel.role" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DayAndNightModel.status_user" Width="1.5" PointX="5.25" PointY="1.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DayAndNightModel.type_room" Width="1.5" PointX="0.875" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DayAndNightModel.user" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayAndNightModel.client" Width="1.5" PointX="8" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayAndNightModel.info_room" Width="1.5" PointX="2.875" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayAndNightModel.role" Width="1.5" PointX="0.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayAndNightModel.status_user" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayAndNightModel.type_room" Width="1.5" PointX="1" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DayAndNightModel.user" Width="1.5" PointX="2.625" PointY="2" IsExpanded="true" />
         <AssociationConnector Association="DayAndNightModel.FK_blocking_user" ManuallyRouted="false" />
         <AssociationConnector Association="DayAndNightModel.FK_booking_history_borrow_room" ManuallyRouted="false" />
         <AssociationConnector Association="DayAndNightModel.borrow_room_fk0" ManuallyRouted="false" />
@@ -22,6 +22,8 @@
         <AssociationConnector Association="DayAndNightModel.info_room_fk0" ManuallyRouted="false" />
         <AssociationConnector Association="DayAndNightModel.FK_user_role" ManuallyRouted="false" />
         <AssociationConnector Association="DayAndNightModel.FK_user_status_user" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DayAndNightModel.status_room" Width="1.5" PointX="1" PointY="7.625" />
+        <AssociationConnector Association="DayAndNightModel.FK_info_room_status_room" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
