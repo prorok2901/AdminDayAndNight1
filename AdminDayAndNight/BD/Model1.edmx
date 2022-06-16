@@ -11,34 +11,34 @@
           </Key>
           <Property Name="id" Type="int" Nullable="false" />
           <Property Name="block_time" Type="datetime2" Precision="7" Nullable="false" />
-          <Property Name="block_user" Type="int" />
+          <Property Name="block_user" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="booking_history">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="borrow_room" Type="int" Nullable="false" />
           <Property Name="date_departure" Type="date" Nullable="false" />
+          <Property Name="administrator" Type="int" Nullable="false" />
           <Property Name="cause" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="borrow_room">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="room" Type="int" Nullable="false" />
-          <Property Name="client" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="client" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="administrator" Type="int" Nullable="false" />
-          <Property Name="status" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="count_day" Type="int" Nullable="false" />
           <Property Name="date_settlement" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="client">
           <Key>
-            <PropertyRef Name="phone" />
+            <PropertyRef Name="email_Adress" />
           </Key>
-          <Property Name="phone" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="email_Adress" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="passport_details" Type="varchar" MaxLength="10" Nullable="false" />
         </EntityType>
@@ -49,33 +49,47 @@
           <Property Name="num_room" Type="int" Nullable="false" />
           <Property Name="count_room" Type="int" Nullable="false" />
           <Property Name="capacity" Type="int" Nullable="false" />
-          <Property Name="type_room" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="type_room" Type="int" Nullable="false" />
           <Property Name="chort_description" Type="varchar" MaxLength="255" />
           <Property Name="price" Type="money" Nullable="false" />
-          <Property Name="status_room" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="status_room" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="role">
           <Key>
-            <PropertyRef Name="name" />
+            <PropertyRef Name="ID" />
           </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="status_room">
           <Key>
-            <PropertyRef Name="name" />
+            <PropertyRef Name="ID" />
           </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="status_user">
           <Key>
-            <PropertyRef Name="name" />
+            <PropertyRef Name="ID" />
           </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="type_room">
           <Key>
-            <PropertyRef Name="name" />
+            <PropertyRef Name="ID" />
           </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="user">
@@ -83,11 +97,11 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="role" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="user_status" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="login" Type="varchar" MaxLength="50" />
+          <Property Name="role" Type="int" Nullable="false" />
+          <Property Name="user_status" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="borrow_room_fk0">
           <End Role="info_room" Type="Self.info_room" Multiplicity="1" />
@@ -106,7 +120,7 @@
           <End Role="borrow_room" Type="Self.borrow_room" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="client">
-              <PropertyRef Name="phone" />
+              <PropertyRef Name="email_Adress" />
             </Principal>
             <Dependent Role="borrow_room">
               <PropertyRef Name="client" />
@@ -114,7 +128,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_blocking_user">
-          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="1" />
           <End Role="blocking" Type="Self.blocking" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="user">
@@ -134,6 +148,18 @@
             </Principal>
             <Dependent Role="booking_history">
               <PropertyRef Name="borrow_room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_booking_history_user">
+          <End Role="user" Type="Self.user" Multiplicity="1" />
+          <End Role="booking_history" Type="Self.booking_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="booking_history">
+              <PropertyRef Name="administrator" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -154,10 +180,22 @@
           <End Role="info_room" Type="Self.info_room" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="status_room">
-              <PropertyRef Name="name" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="info_room">
               <PropertyRef Name="status_room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_info_room_type_room">
+          <End Role="type_room" Type="Self.type_room" Multiplicity="1" />
+          <End Role="info_room" Type="Self.info_room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type_room">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="info_room">
+              <PropertyRef Name="type_room" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -166,7 +204,7 @@
           <End Role="user" Type="Self.user" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="role">
-              <PropertyRef Name="name" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="user">
               <PropertyRef Name="role" />
@@ -178,22 +216,10 @@
           <End Role="user" Type="Self.user" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="status_user">
-              <PropertyRef Name="name" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="user">
               <PropertyRef Name="user_status" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="info_room_fk0">
-          <End Role="type_room" Type="Self.type_room" Multiplicity="1" />
-          <End Role="info_room" Type="Self.info_room" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="type_room">
-              <PropertyRef Name="name" />
-            </Principal>
-            <Dependent Role="info_room">
-              <PropertyRef Name="type_room" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -206,6 +232,7 @@
           <EntitySet Name="role" EntityType="Self.role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="status_room" EntityType="Self.status_room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="status_user" EntityType="Self.status_user" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="type_room" EntityType="Self.type_room" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="borrow_room_fk0" Association="Self.borrow_room_fk0">
@@ -224,12 +251,20 @@
             <End Role="borrow_room" EntitySet="borrow_room" />
             <End Role="booking_history" EntitySet="booking_history" />
           </AssociationSet>
+          <AssociationSet Name="FK_booking_history_user" Association="Self.FK_booking_history_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="booking_history" EntitySet="booking_history" />
+          </AssociationSet>
           <AssociationSet Name="FK_borrow_room_user" Association="Self.FK_borrow_room_user">
             <End Role="user" EntitySet="user" />
             <End Role="borrow_room" EntitySet="borrow_room" />
           </AssociationSet>
           <AssociationSet Name="FK_info_room_status_room" Association="Self.FK_info_room_status_room">
             <End Role="status_room" EntitySet="status_room" />
+            <End Role="info_room" EntitySet="info_room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_info_room_type_room" Association="Self.FK_info_room_type_room">
+            <End Role="type_room" EntitySet="type_room" />
             <End Role="info_room" EntitySet="info_room" />
           </AssociationSet>
           <AssociationSet Name="FK_user_role" Association="Self.FK_user_role">
@@ -240,59 +275,83 @@
             <End Role="status_user" EntitySet="status_user" />
             <End Role="user" EntitySet="user" />
           </AssociationSet>
-          <AssociationSet Name="info_room_fk0" Association="Self.info_room_fk0">
-            <End Role="type_room" EntitySet="type_room" />
-            <End Role="info_room" EntitySet="info_room" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DayAndNightModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="blocking">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="block_time" Type="DateTime" Nullable="false" Precision="7" />
-          <Property Name="block_user" Type="Int32" />
-          <NavigationProperty Name="user" Relationship="Self.FK_blocking_user" FromRole="blocking" ToRole="user" />
-        </EntityType>
-        <EntityType Name="booking_history">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="borrow_room" Type="Int32" Nullable="false" />
-          <Property Name="date_departure" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="cause" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="borrow_room1" Relationship="Self.FK_booking_history_borrow_room" FromRole="booking_history" ToRole="borrow_room" />
-        </EntityType>
-        <EntityType Name="borrow_room">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
-          <Property Name="room" Type="Int32" Nullable="false" />
-          <Property Name="client" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="administrator" Type="Int32" Nullable="false" />
-          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="count_day" Type="Int32" Nullable="false" />
-          <Property Name="date_settlement" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="booking_history" Relationship="Self.FK_booking_history_borrow_room" FromRole="borrow_room" ToRole="booking_history" />
-          <NavigationProperty Name="info_room" Relationship="Self.borrow_room_fk0" FromRole="borrow_room" ToRole="info_room" />
-          <NavigationProperty Name="client1" Relationship="Self.borrow_room_fk1" FromRole="borrow_room" ToRole="client" />
-          <NavigationProperty Name="user" Relationship="Self.FK_borrow_room_user" FromRole="borrow_room" ToRole="user" />
-        </EntityType>
         <EntityType Name="client">
           <Key>
-            <PropertyRef Name="phone" />
+            <PropertyRef Name="email_Adress" />
           </Key>
-          <Property Name="phone" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email_Adress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="passport_details" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="borrow_room" Relationship="Self.borrow_room_fk1" FromRole="client" ToRole="borrow_room" />
+          <NavigationProperty Name="borrow_room" Relationship="DayAndNightModel.borrow_room_fk1" FromRole="client" ToRole="borrow_room" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityContainer Name="DayAndNightEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="client" EntityType="Self.client" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="info_room" EntityType="DayAndNightModel.info_room" />
+          <EntitySet Name="role" EntityType="DayAndNightModel.role" />
+          <EntitySet Name="status_room" EntityType="DayAndNightModel.status_room" />
+          <EntitySet Name="type_room" EntityType="DayAndNightModel.type_room" />
+          <AssociationSet Name="FK_info_room_status_room" Association="DayAndNightModel.FK_info_room_status_room">
+            <End Role="status_room" EntitySet="status_room" />
+            <End Role="info_room" EntitySet="info_room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_info_room_type_room" Association="DayAndNightModel.FK_info_room_type_room">
+            <End Role="type_room" EntitySet="type_room" />
+            <End Role="info_room" EntitySet="info_room" />
+          </AssociationSet>
+          <EntitySet Name="blocking" EntityType="DayAndNightModel.blocking" />
+          <EntitySet Name="booking_history" EntityType="DayAndNightModel.booking_history" />
+          <EntitySet Name="borrow_room" EntityType="DayAndNightModel.borrow_room" />
+          <AssociationSet Name="FK_booking_history_borrow_room" Association="DayAndNightModel.FK_booking_history_borrow_room">
+            <End Role="borrow_room" EntitySet="borrow_room" />
+            <End Role="booking_history" EntitySet="booking_history" />
+          </AssociationSet>
+          <AssociationSet Name="borrow_room_fk0" Association="DayAndNightModel.borrow_room_fk0">
+            <End Role="info_room" EntitySet="info_room" />
+            <End Role="borrow_room" EntitySet="borrow_room" />
+          </AssociationSet>
+          <AssociationSet Name="borrow_room_fk1" Association="DayAndNightModel.borrow_room_fk1">
+            <End Role="client" EntitySet="client" />
+            <End Role="borrow_room" EntitySet="borrow_room" />
+          </AssociationSet>
+          <EntitySet Name="status_user" EntityType="DayAndNightModel.status_user" />
+          <EntitySet Name="user" EntityType="DayAndNightModel.user" />
+          <AssociationSet Name="FK_blocking_user" Association="DayAndNightModel.FK_blocking_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="blocking" EntitySet="blocking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_booking_history_user" Association="DayAndNightModel.FK_booking_history_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="booking_history" EntitySet="booking_history" />
+          </AssociationSet>
+          <AssociationSet Name="FK_borrow_room_user" Association="DayAndNightModel.FK_borrow_room_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="borrow_room" EntitySet="borrow_room" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_role" Association="DayAndNightModel.FK_user_role">
+            <End Role="role" EntitySet="role" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_user_status_user" Association="DayAndNightModel.FK_user_status_user">
+            <End Role="status_user" EntitySet="status_user" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="info_room">
           <Key>
             <PropertyRef Name="num_room" />
@@ -300,65 +359,101 @@
           <Property Name="num_room" Type="Int32" Nullable="false" />
           <Property Name="count_room" Type="Int32" Nullable="false" />
           <Property Name="capacity" Type="Int32" Nullable="false" />
-          <Property Name="type_room" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="type_room" Type="Int32" Nullable="false" />
           <Property Name="chort_description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <NavigationProperty Name="borrow_room" Relationship="Self.borrow_room_fk0" FromRole="info_room" ToRole="borrow_room" />
-          <NavigationProperty Name="type_room1" Relationship="Self.info_room_fk0" FromRole="info_room" ToRole="type_room" />
-          <Property Name="status_room" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+          <Property Name="status_room" Type="Int32" Nullable="false" />
           <NavigationProperty Name="status_room1" Relationship="DayAndNightModel.FK_info_room_status_room" FromRole="info_room" ToRole="status_room" />
+          <NavigationProperty Name="type_room1" Relationship="DayAndNightModel.FK_info_room_type_room" FromRole="info_room" ToRole="type_room" />
+          <NavigationProperty Name="borrow_room" Relationship="DayAndNightModel.borrow_room_fk0" FromRole="info_room" ToRole="borrow_room" />
         </EntityType>
         <EntityType Name="role">
           <Key>
-            <PropertyRef Name="name" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="user" Relationship="Self.FK_user_role" FromRole="role" ToRole="user" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="user" Relationship="DayAndNightModel.FK_user_role" FromRole="role" ToRole="user" />
         </EntityType>
-        <EntityType Name="status_user">
+        <EntityType Name="status_room">
           <Key>
-            <PropertyRef Name="name" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="user" Relationship="Self.FK_user_status_user" FromRole="status_user" ToRole="user" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="info_room" Relationship="DayAndNightModel.FK_info_room_status_room" FromRole="status_room" ToRole="info_room" />
         </EntityType>
         <EntityType Name="type_room">
           <Key>
-            <PropertyRef Name="name" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="info_room" Relationship="Self.info_room_fk0" FromRole="type_room" ToRole="info_room" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="info_room" Relationship="DayAndNightModel.FK_info_room_type_room" FromRole="type_room" ToRole="info_room" />
         </EntityType>
-        <EntityType Name="user">
+        <Association Name="FK_info_room_status_room">
+          <End Type="DayAndNightModel.status_room" Role="status_room" Multiplicity="1" />
+          <End Type="DayAndNightModel.info_room" Role="info_room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="status_room">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="info_room">
+              <PropertyRef Name="status_room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_info_room_type_room">
+          <End Type="DayAndNightModel.type_room" Role="type_room" Multiplicity="1" />
+          <End Type="DayAndNightModel.info_room" Role="info_room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="type_room">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="info_room">
+              <PropertyRef Name="type_room" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="blocking">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="block_time" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="block_user" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="user" Relationship="DayAndNightModel.FK_blocking_user" FromRole="blocking" ToRole="user" />
+        </EntityType>
+        <EntityType Name="booking_history">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="role" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="user_status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="blocking" Relationship="Self.FK_blocking_user" FromRole="user" ToRole="blocking" />
-          <NavigationProperty Name="borrow_room" Relationship="Self.FK_borrow_room_user" FromRole="user" ToRole="borrow_room" />
-          <NavigationProperty Name="role1" Relationship="Self.FK_user_role" FromRole="user" ToRole="role" />
-          <NavigationProperty Name="status_user" Relationship="Self.FK_user_status_user" FromRole="user" ToRole="status_user" />
+          <Property Name="borrow_room" Type="Int32" Nullable="false" />
+          <Property Name="date_departure" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="administrator" Type="Int32" Nullable="false" />
+          <Property Name="cause" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="borrow_room1" Relationship="DayAndNightModel.FK_booking_history_borrow_room" FromRole="booking_history" ToRole="borrow_room" />
+          <NavigationProperty Name="user" Relationship="DayAndNightModel.FK_booking_history_user" FromRole="booking_history" ToRole="user" />
         </EntityType>
-        <Association Name="FK_blocking_user">
-          <End Role="user" Type="Self.user" Multiplicity="0..1" />
-          <End Role="blocking" Type="Self.blocking" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="user">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="blocking">
-              <PropertyRef Name="block_user" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="borrow_room">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="room" Type="Int32" Nullable="false" />
+          <Property Name="client" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="administrator" Type="Int32" Nullable="false" />
+          <Property Name="count_day" Type="Int32" Nullable="false" />
+          <Property Name="date_settlement" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="booking_history" Relationship="DayAndNightModel.FK_booking_history_borrow_room" FromRole="borrow_room" ToRole="booking_history" />
+          <NavigationProperty Name="info_room" Relationship="DayAndNightModel.borrow_room_fk0" FromRole="borrow_room" ToRole="info_room" />
+          <NavigationProperty Name="client1" Relationship="DayAndNightModel.borrow_room_fk1" FromRole="borrow_room" ToRole="client" />
+          <NavigationProperty Name="user" Relationship="DayAndNightModel.FK_borrow_room_user" FromRole="borrow_room" ToRole="user" />
+        </EntityType>
         <Association Name="FK_booking_history_borrow_room">
-          <End Role="borrow_room" Type="Self.borrow_room" Multiplicity="1" />
-          <End Role="booking_history" Type="Self.booking_history" Multiplicity="*" />
+          <End Type="DayAndNightModel.borrow_room" Role="borrow_room" Multiplicity="1" />
+          <End Type="DayAndNightModel.booking_history" Role="booking_history" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="borrow_room">
               <PropertyRef Name="id" />
@@ -369,8 +464,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="borrow_room_fk0">
-          <End Role="info_room" Type="Self.info_room" Multiplicity="1" />
-          <End Role="borrow_room" Type="Self.borrow_room" Multiplicity="*" />
+          <End Type="DayAndNightModel.info_room" Role="info_room" Multiplicity="1" />
+          <End Type="DayAndNightModel.borrow_room" Role="borrow_room" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="info_room">
               <PropertyRef Name="num_room" />
@@ -381,20 +476,68 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="borrow_room_fk1">
-          <End Role="client" Type="Self.client" Multiplicity="1" />
-          <End Role="borrow_room" Type="Self.borrow_room" Multiplicity="*" />
+          <End Type="DayAndNightModel.client" Role="client" Multiplicity="1" />
+          <End Type="DayAndNightModel.borrow_room" Role="borrow_room" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="client">
-              <PropertyRef Name="phone" />
+              <PropertyRef Name="email_Adress" />
             </Principal>
             <Dependent Role="borrow_room">
               <PropertyRef Name="client" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="status_user">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="user" Relationship="DayAndNightModel.FK_user_status_user" FromRole="status_user" ToRole="user" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="role" Type="Int32" Nullable="false" />
+          <Property Name="user_status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="blocking" Relationship="DayAndNightModel.FK_blocking_user" FromRole="user" ToRole="blocking" />
+          <NavigationProperty Name="booking_history" Relationship="DayAndNightModel.FK_booking_history_user" FromRole="user" ToRole="booking_history" />
+          <NavigationProperty Name="borrow_room" Relationship="DayAndNightModel.FK_borrow_room_user" FromRole="user" ToRole="borrow_room" />
+          <NavigationProperty Name="role1" Relationship="DayAndNightModel.FK_user_role" FromRole="user" ToRole="role" />
+          <NavigationProperty Name="status_user" Relationship="DayAndNightModel.FK_user_status_user" FromRole="user" ToRole="status_user" />
+        </EntityType>
+        <Association Name="FK_blocking_user">
+          <End Type="DayAndNightModel.user" Role="user" Multiplicity="1" />
+          <End Type="DayAndNightModel.blocking" Role="blocking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="blocking">
+              <PropertyRef Name="block_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_booking_history_user">
+          <End Type="DayAndNightModel.user" Role="user" Multiplicity="1" />
+          <End Type="DayAndNightModel.booking_history" Role="booking_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="booking_history">
+              <PropertyRef Name="administrator" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_borrow_room_user">
-          <End Role="user" Type="Self.user" Multiplicity="1" />
-          <End Role="borrow_room" Type="Self.borrow_room" Multiplicity="*" />
+          <End Type="DayAndNightModel.user" Role="user" Multiplicity="1" />
+          <End Type="DayAndNightModel.borrow_room" Role="borrow_room" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="user">
               <PropertyRef Name="id" />
@@ -404,24 +547,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="info_room_fk0">
-          <End Role="type_room" Type="Self.type_room" Multiplicity="1" />
-          <End Role="info_room" Type="Self.info_room" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="type_room">
-              <PropertyRef Name="name" />
-            </Principal>
-            <Dependent Role="info_room">
-              <PropertyRef Name="type_room" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_user_role">
-          <End Role="role" Type="Self.role" Multiplicity="1" />
-          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <End Type="DayAndNightModel.role" Role="role" Multiplicity="1" />
+          <End Type="DayAndNightModel.user" Role="user" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="role">
-              <PropertyRef Name="name" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="user">
               <PropertyRef Name="role" />
@@ -429,128 +560,40 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_user_status_user">
-          <End Role="status_user" Type="Self.status_user" Multiplicity="1" />
-          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <End Type="DayAndNightModel.status_user" Role="status_user" Multiplicity="1" />
+          <End Type="DayAndNightModel.user" Role="user" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="status_user">
-              <PropertyRef Name="name" />
+              <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="user">
               <PropertyRef Name="user_status" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DayAndNightEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="blocking" EntityType="Self.blocking" />
-          <EntitySet Name="booking_history" EntityType="Self.booking_history" />
-          <EntitySet Name="borrow_room" EntityType="Self.borrow_room" />
-          <EntitySet Name="client" EntityType="Self.client" />
-          <EntitySet Name="info_room" EntityType="Self.info_room" />
-          <EntitySet Name="role" EntityType="Self.role" />
-          <EntitySet Name="status_user" EntityType="Self.status_user" />
-          <EntitySet Name="type_room" EntityType="Self.type_room" />
-          <EntitySet Name="user" EntityType="Self.user" />
-          <AssociationSet Name="FK_blocking_user" Association="Self.FK_blocking_user">
-            <End Role="user" EntitySet="user" />
-            <End Role="blocking" EntitySet="blocking" />
-          </AssociationSet>
-          <AssociationSet Name="FK_booking_history_borrow_room" Association="Self.FK_booking_history_borrow_room">
-            <End Role="borrow_room" EntitySet="borrow_room" />
-            <End Role="booking_history" EntitySet="booking_history" />
-          </AssociationSet>
-          <AssociationSet Name="borrow_room_fk0" Association="Self.borrow_room_fk0">
-            <End Role="info_room" EntitySet="info_room" />
-            <End Role="borrow_room" EntitySet="borrow_room" />
-          </AssociationSet>
-          <AssociationSet Name="borrow_room_fk1" Association="Self.borrow_room_fk1">
-            <End Role="client" EntitySet="client" />
-            <End Role="borrow_room" EntitySet="borrow_room" />
-          </AssociationSet>
-          <AssociationSet Name="FK_borrow_room_user" Association="Self.FK_borrow_room_user">
-            <End Role="user" EntitySet="user" />
-            <End Role="borrow_room" EntitySet="borrow_room" />
-          </AssociationSet>
-          <AssociationSet Name="info_room_fk0" Association="Self.info_room_fk0">
-            <End Role="type_room" EntitySet="type_room" />
-            <End Role="info_room" EntitySet="info_room" />
-          </AssociationSet>
-          <AssociationSet Name="FK_user_role" Association="Self.FK_user_role">
-            <End Role="role" EntitySet="role" />
-            <End Role="user" EntitySet="user" />
-          </AssociationSet>
-          <AssociationSet Name="FK_user_status_user" Association="Self.FK_user_status_user">
-            <End Role="status_user" EntitySet="status_user" />
-            <End Role="user" EntitySet="user" />
-          </AssociationSet>
-          <EntitySet Name="status_room" EntityType="DayAndNightModel.status_room" />
-          <AssociationSet Name="FK_info_room_status_room" Association="DayAndNightModel.FK_info_room_status_room">
-            <End Role="status_room" EntitySet="status_room" />
-            <End Role="info_room" EntitySet="info_room" />
-          </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="status_room">
-          <Key>
-            <PropertyRef Name="name" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="info_room" Relationship="DayAndNightModel.FK_info_room_status_room" FromRole="status_room" ToRole="info_room" />
-        </EntityType>
-        <Association Name="FK_info_room_status_room">
-          <End Type="DayAndNightModel.status_room" Role="status_room" Multiplicity="1" />
-          <End Type="DayAndNightModel.info_room" Role="info_room" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="status_room">
-              <PropertyRef Name="name" />
-            </Principal>
-            <Dependent Role="info_room">
-              <PropertyRef Name="status_room" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище DayAndNightModelContainer" CdmEntityContainer="DayAndNightEntities">
-          <EntitySetMapping Name="blocking">
-            <EntityTypeMapping TypeName="DayAndNightModel.blocking">
-              <MappingFragment StoreEntitySet="blocking">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="block_time" ColumnName="block_time" />
-                <ScalarProperty Name="block_user" ColumnName="block_user" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="booking_history">
-            <EntityTypeMapping TypeName="DayAndNightModel.booking_history">
-              <MappingFragment StoreEntitySet="booking_history">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="borrow_room" ColumnName="borrow_room" />
-                <ScalarProperty Name="date_departure" ColumnName="date_departure" />
-                <ScalarProperty Name="cause" ColumnName="cause" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="borrow_room">
-            <EntityTypeMapping TypeName="DayAndNightModel.borrow_room">
-              <MappingFragment StoreEntitySet="borrow_room">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="room" ColumnName="room" />
-                <ScalarProperty Name="client" ColumnName="client" />
-                <ScalarProperty Name="administrator" ColumnName="administrator" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="count_day" ColumnName="count_day" />
-                <ScalarProperty Name="date_settlement" ColumnName="date_settlement" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="client">
             <EntityTypeMapping TypeName="DayAndNightModel.client">
               <MappingFragment StoreEntitySet="client">
-                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="email_Adress" ColumnName="email_Adress" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="passport_details" ColumnName="passport_details" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DayAndNightModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -558,12 +601,12 @@
             <EntityTypeMapping TypeName="DayAndNightModel.info_room">
               <MappingFragment StoreEntitySet="info_room">
                 <ScalarProperty Name="status_room" ColumnName="status_room" />
-                <ScalarProperty Name="num_room" ColumnName="num_room" />
-                <ScalarProperty Name="count_room" ColumnName="count_room" />
-                <ScalarProperty Name="capacity" ColumnName="capacity" />
-                <ScalarProperty Name="type_room" ColumnName="type_room" />
-                <ScalarProperty Name="chort_description" ColumnName="chort_description" />
                 <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="chort_description" ColumnName="chort_description" />
+                <ScalarProperty Name="type_room" ColumnName="type_room" />
+                <ScalarProperty Name="capacity" ColumnName="capacity" />
+                <ScalarProperty Name="count_room" ColumnName="count_room" />
+                <ScalarProperty Name="num_room" ColumnName="num_room" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -571,32 +614,7 @@
             <EntityTypeMapping TypeName="DayAndNightModel.role">
               <MappingFragment StoreEntitySet="role">
                 <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="status_user">
-            <EntityTypeMapping TypeName="DayAndNightModel.status_user">
-              <MappingFragment StoreEntitySet="status_user">
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="type_room">
-            <EntityTypeMapping TypeName="DayAndNightModel.type_room">
-              <MappingFragment StoreEntitySet="type_room">
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="user">
-            <EntityTypeMapping TypeName="DayAndNightModel.user">
-              <MappingFragment StoreEntitySet="user">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="role" ColumnName="role" />
-                <ScalarProperty Name="user_status" ColumnName="user_status" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -604,10 +622,71 @@
             <EntityTypeMapping TypeName="DayAndNightModel.status_room">
               <MappingFragment StoreEntitySet="status_room">
                 <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="type_room">
+            <EntityTypeMapping TypeName="DayAndNightModel.type_room">
+              <MappingFragment StoreEntitySet="type_room">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="blocking">
+            <EntityTypeMapping TypeName="DayAndNightModel.blocking">
+              <MappingFragment StoreEntitySet="blocking">
+                <ScalarProperty Name="block_user" ColumnName="block_user" />
+                <ScalarProperty Name="block_time" ColumnName="block_time" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="booking_history">
+            <EntityTypeMapping TypeName="DayAndNightModel.booking_history">
+              <MappingFragment StoreEntitySet="booking_history">
+                <ScalarProperty Name="cause" ColumnName="cause" />
+                <ScalarProperty Name="administrator" ColumnName="administrator" />
+                <ScalarProperty Name="date_departure" ColumnName="date_departure" />
+                <ScalarProperty Name="borrow_room" ColumnName="borrow_room" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="borrow_room">
+            <EntityTypeMapping TypeName="DayAndNightModel.borrow_room">
+              <MappingFragment StoreEntitySet="borrow_room">
+                <ScalarProperty Name="date_settlement" ColumnName="date_settlement" />
+                <ScalarProperty Name="count_day" ColumnName="count_day" />
+                <ScalarProperty Name="administrator" ColumnName="administrator" />
+                <ScalarProperty Name="client" ColumnName="client" />
+                <ScalarProperty Name="room" ColumnName="room" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="status_user">
+            <EntityTypeMapping TypeName="DayAndNightModel.status_user">
+              <MappingFragment StoreEntitySet="status_user">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="DayAndNightModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="user_status" ColumnName="user_status" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

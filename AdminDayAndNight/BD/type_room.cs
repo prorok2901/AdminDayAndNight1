@@ -20,6 +20,7 @@ namespace AdminDayAndNight.BD
             this.info_room = new HashSet<info_room>();
         }
     
+        public int ID { get; set; }
         public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

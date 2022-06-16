@@ -23,14 +23,14 @@ namespace AdminDayAndNight.BD
         public int num_room { get; set; }
         public int count_room { get; set; }
         public int capacity { get; set; }
-        public string type_room { get; set; }
+        public int type_room { get; set; }
         public string chort_description { get; set; }
         public decimal price { get; set; }
-        public string status_room { get; set; }
+        public int status_room { get; set; }
     
+        public virtual status_room status_room1 { get; set; }
+        public virtual type_room type_room1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<borrow_room> borrow_room { get; set; }
-        public virtual type_room type_room1 { get; set; }
-        public virtual status_room status_room1 { get; set; }
     }
 }

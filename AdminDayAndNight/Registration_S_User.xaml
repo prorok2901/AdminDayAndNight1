@@ -9,16 +9,18 @@
       Title="Registration_S_User">
 
     <Grid>
-        <Border Margin="267,31,245,98">
+        <Border Margin="502,10,10,119" Background="#bca97d"  CornerRadius="13" BorderBrush="Black" BorderThickness="0.5">
             <Grid>
-                <TextBox Name="NameUser" Height="41" Text="Введите имя" VerticalAlignment="Top" HorizontalAlignment="Center" Width="214" Margin="0,27,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                <TextBox Name="PasswordUser" Height="41" Text="Введите пароль" VerticalAlignment="Top" HorizontalAlignment="Center" Width="214" Margin="0,119,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                <TextBox Name="PasswordUserRepeat" Height="41" Text="Введите пароль ещё раз" VerticalAlignment="Top" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="214" Margin="0,165,0,0"/>
-                <TextBox x:Name="LoginUser" Height="41" Text="Введите имя" VerticalAlignment="Top" HorizontalAlignment="Center" Width="214" Margin="0,73,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                
-                <Button Content="Зарегистрировать админа" Height="30" VerticalAlignment="Top" HorizontalAlignment="Center" Width="172" RenderTransformOrigin="0.5,0.5" Margin="0,234,0,0" Click="Button_Click"/>
-                
+                <TextBox Style="{DynamicResource TextBoxK}" Name="NameUser" Height="41" Text="Введите имя" VerticalAlignment="Top" HorizontalAlignment="Left" Width="214" Margin="46,27,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" GotFocus="Name_GotFocus" LostFocus="Name_LostFocus"/>
+                <TextBox GotFocus="Password_GotFocus" Style="{DynamicResource TextBoxK}" Name="PasswordUser" Height="41" Text="Введите пароль" VerticalAlignment="Top" HorizontalAlignment="Left" Width="212" Margin="48,119,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Style="{DynamicResource TextBoxK}" x:Name="LoginUser" Height="41" Text="Введите логин" VerticalAlignment="Top" HorizontalAlignment="Left" Width="214" Margin="46,73,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" GotFocus="Login_GotFocus" LostFocus="Login_LostFocus"/>
 
+                <PasswordBox LostFocus="Password_LostFocus" Background="#bca97d" LostKeyboardFocus="Password_LostFocus" Style="{DynamicResource PasswordBoxK}" x:Name="PasswordBoxUser" Margin="46,119,0,0" Height="41" VerticalAlignment="Top" HorizontalAlignment="Left" Width="214"/>
+
+                <Image Source="/Image/Closed.png" x:Name="Inkognito" MouseEnter="Inkognito_MouseEnter" MouseLeave="Inkognito_MouseLeave" Margin="10,119,0,0" Height="41" VerticalAlignment="Top" HorizontalAlignment="Left" Width="33"/>
+
+                <Button  Style="{DynamicResource ButtonK}" Content="Зарегистрировать админа" Height="30" VerticalAlignment="Top" HorizontalAlignment="Center" Width="172" RenderTransformOrigin="0.5,0.5" Margin="0,189,0,0" Click="Button_Click"/>
+                <Button x:Name="GoBack" Style="{DynamicResource ButtonK}" Content="Вернуться" Height="30" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="98" RenderTransformOrigin="0.5,0.5" Margin="0,0,0,10" Click="Button_Click_1"/>
             </Grid>
         </Border>
     </Grid>

@@ -9,11 +9,19 @@
       Title="Authorization">
 
     <Grid>
-        <TextBox x:Name="LoginUser" Margin="564,16,0,0" Height="41" VerticalAlignment="Top" HorizontalAlignment="Left" Width="214"/>
-        <TextBox x:Name="PasswordUser" Margin="564,62,0,0" Height="41" VerticalAlignment="Top" HorizontalAlignment="Left" Width="214"/>
+        <Border Background="#bca97d"  CornerRadius="13" BorderBrush="Black" BorderThickness="0.5" Margin="516,10,10,0" Height="219" VerticalAlignment="Top">
+            <Grid HorizontalAlignment="Center" Width="274" Height="224" VerticalAlignment="Bottom">
+                <TextBox Text="Введите логин" Style="{DynamicResource TextBoxK}" x:Name="LoginUser" Margin="48,29,0,0" Height="41" VerticalAlignment="Top" HorizontalAlignment="Left" Width="198" GotFocus="Login_GotFocus" LostFocus="Login_LostFocus"/>
+                <TextBox GotFocus="Password_GotFocus" Style="{DynamicResource TextBoxK}" Text="Введите пароль" x:Name="PasswordUser" Margin="48,75,0,0" Height="41" VerticalAlignment="Top" HorizontalAlignment="Left" Width="198"/>
+                <PasswordBox Background="#bca97d" LostKeyboardFocus="Password_LostFocus" Style="{DynamicResource PasswordBoxK}" x:Name="PasswordBoxUser" Margin="48,75,0,0" Height="41" VerticalAlignment="Top" HorizontalAlignment="Left" Width="198"/>
 
-        <Button Margin="593,114,0,0" Content="Войти" Click="Button_Click" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="156" FontSize="16"/>
-        <Button Margin="606,149,0,0" Content="Зарегистрироваться" Height="29" VerticalAlignment="Top" HorizontalAlignment="Left" Width="130" Click="Button_Click_1"/>
+                <Image Source="/Image/Closed.png" x:Name="Inkognito" MouseEnter="Inkognito_MouseEnter" MouseLeave="Inkognito_MouseLeave" Margin="15,79,0,0" Height="41" VerticalAlignment="Top" HorizontalAlignment="Left" Width="33"/>
+
+                <Button Style="{DynamicResource ButtonK}" Margin="0,136,0,0" Content="Войти" Click="Button_Click" Height="30" VerticalAlignment="Top" HorizontalAlignment="Center" Width="156" FontSize="16"/>
+                <Button Style="{DynamicResource ButtonK}" Margin="0,171,0,0" Content="Зарегистрироваться" Height="29" VerticalAlignment="Top" HorizontalAlignment="Center" Width="130" Click="Button_Click_1"/>
+
+            </Grid>
+        </Border>
 
         <Border x:Name="CapTcha" Margin="265,0,324,225" Height="163" VerticalAlignment="Bottom" CornerRadius="13" Background="#baac8b" Visibility="Hidden">
             <Grid>

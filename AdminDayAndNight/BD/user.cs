@@ -18,18 +18,21 @@ namespace AdminDayAndNight.BD
         public user()
         {
             this.blocking = new HashSet<blocking>();
+            this.booking_history = new HashSet<booking_history>();
             this.borrow_room = new HashSet<borrow_room>();
         }
     
         public int id { get; set; }
-        public string name { get; set; }
-        public string role { get; set; }
-        public string user_status { get; set; }
-        public string password { get; set; }
         public string login { get; set; }
+        public string name { get; set; }
+        public string password { get; set; }
+        public int role { get; set; }
+        public int user_status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<blocking> blocking { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<booking_history> booking_history { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<borrow_room> borrow_room { get; set; }
         public virtual role role1 { get; set; }

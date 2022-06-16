@@ -16,7 +16,7 @@ namespace AdminDayAndNight.BD
     {
         public int id { get; set; }
         public System.DateTime block_time { get; set; }
-        public Nullable<int> block_user { get; set; }
+        public int block_user { get; set; }
     
         public virtual user user { get; set; }
     }

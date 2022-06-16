@@ -20,7 +20,7 @@ namespace AdminDayAndNight.BD
             this.borrow_room = new HashSet<borrow_room>();
         }
     
-        public string phone { get; set; }
+        public string email_Adress { get; set; }
         public string name { get; set; }
         public string passport_details { get; set; }
     

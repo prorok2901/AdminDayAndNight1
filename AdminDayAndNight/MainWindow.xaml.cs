@@ -1,31 +1,32 @@
-﻿using System;
+﻿using AdminDayAndNight.Connector;
+using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace AdminDayAndNight
 {
-
     public partial class MainWindow : Window
     {
-        BD.DayAndNightEntities basaBD = new BD.DayAndNightEntities();
+        BD_Data basaBD = new BD_Data();
+
         public MainWindow()
         {
             InitializeComponent();
             chekSuperUser();
         }
+
         private void chekSuperUser()
         {
-            BD.user super_admin = basaBD.user.FirstOrDefault(a => a.role == "Super_User");
-            if (super_admin == null)
+            if (basaBD.DataBase().user.Any(a => a.role1.name == "Super_User" && a.status_user.name == "Работает"))
             {
-                Opupet.Navigate(Pages.RegistrationUser(FirstStart, StartImage));
-                FirstStart.Visibility = Visibility.Visible;
-                StartImage.ImageSource = new BitmapImage(new Uri(@"C:\Users\proro\Source\Repos\prorok2901\AdminDayAndNight1\AdminDayAndNight\Image\First_Start.png"));
+                Opupet.Navigate(Pages.AutorizationUser());
             }
             else
             {
-                Opupet.Navigate(Pages.AutorizationUser());
+                Opupet.Navigate(Pages.RegistrationUser(FirstStart, StartImage, false));
+                FirstStart.Visibility = Visibility.Visible;
+                StartImage.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Image/First_Start.png"));
             }
         }
     }
