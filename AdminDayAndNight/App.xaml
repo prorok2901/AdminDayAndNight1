@@ -96,30 +96,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
-        <!--
-        <SolidColorBrush x:Key="TextBox.Static.Border1" Color="#927d40"/>
-        <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#9f873f"/>
-        <SolidColorBrush x:Key="TextBox.Focus.Border1" Color="#a98434"/>
-        <SolidColorBrush x:Key="TextBox.Static.Border2" Color="#FFABAdB3"/>
-        <SolidColorBrush x:Key="TextBox.MouseOver.Border1" Color="#9f873f"/>
-        <SolidColorBrush x:Key="TextBox.Focus.Border2" Color="#a98434"/>
-        <Style x:Key="PasswordBoxK" TargetType="{x:Type PasswordBox}">
-            <Setter Property="PasswordChar" Value="●"/>
-            <Setter Property="Background" Value="#9d8d6f"/>
-            <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border1}"/>
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
-            <Setter Property="HorizontalContentAlignment" Value="Left"/>
-            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-            <Setter Property="AllowDrop" Value="true"/>
-            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
-            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
-            <Setter Property="FontSize" Value="18"/>
-        -->
 
         <!-- Для ComboBox-->
         <Style x:Key="ComboBoxEditableTextBox1" TargetType="{x:Type TextBox}">

@@ -9,10 +9,8 @@
 
     <Grid>
         <TabControl BorderThickness="0" Background="Transparent" Height="450" VerticalAlignment="Top" HorizontalAlignment="Center" Width="800">
-
             <TabItem Style="{DynamicResource TabItemRounding}" Header="Управление пользователем" Margin="0,42,-8,-56" HorizontalAlignment="Right" Width="171">
                 <Grid>
-
                     <TabControl Background="Transparent" BorderBrush="Transparent" Margin="0,-14,0,10">
                         <TabItem Style="{DynamicResource TabItemRounding}" Margin="0,21,-188,-25" Header="Пользователи" HorizontalAlignment="Right" Width="131" MouseUp="TabItem_MouseUpUser">
                             <Border Height="348" Margin="225,0,0,0" x:Name="UserControl" Visibility="Hidden">
@@ -21,7 +19,6 @@
 
                                     </ListBox>
                                     <Button Style="{DynamicResource ButtonK}" Margin="0,0,396,10" Content="Нанять работника" HorizontalAlignment="Right" Width="122" Height="30" VerticalAlignment="Bottom" Click="Button_AddEmployee"/>
-
                                     <Border x:Name="PanelEmployee" Visibility="Hidden" Margin="211,0,0,0" CornerRadius="13" Background="#e0d4b5" Height="336" VerticalAlignment="Center" HorizontalAlignment="Left" Width="332">
                                         <Grid>
                                             <TextBox x:Name="NameEmployee" Style="{DynamicResource TextBoxK}" Text="Имя" Margin="10,32,0,269" HorizontalAlignment="Left" Width="307" GotFocus="NameEmployee_GotFocus" LostFocus="NameEmployee_LostFocus" KeyUp="NameEmployee_KeyUp"/>
@@ -33,27 +30,21 @@
                                             <TextBlock Text="Статус пользователя:" Margin="32,247,179,74"/>
                                             <ComboBox Style="{DynamicResource ComboBoxOKR}" x:Name="StatusEmployee" HorizontalAlignment="Left" Width="144" Margin="176,239,0,65"/>
 
-
                                             <TextBox x:Name="PasswordEmployee" Style="{DynamicResource TextBoxK}" Text="Пароль работника" Margin="10,151,0,151" HorizontalAlignment="Left" Width="307" GotFocus="PasswordEmployee_GotFocus" LostFocus="PasswordEmployee_LostFocus" KeyUp="PasswordEmployee_KeyUp"/>
 
                                             <Button x:Name="ChangeUser" Opacity="0.5" Style="{DynamicResource ButtonK}" Margin="15,286,179,27" Content="Изменить" Click="ChangeUser_Click"/>
                                             <Button x:Name="DeleteUser" Style="{DynamicResource ButtonK}" Margin="188,286,0,26" Content="Уволить" HorizontalAlignment="Left" Width="132" Click="DeleteUser_Click"/>
-
                                         </Grid>
                                     </Border>
                                 </Grid>
                             </Border>
-
                         </TabItem>
-
-
                         <TabItem  Style="{DynamicResource TabItemRounding}" Margin="194,21,-219,-25" Header="Статус пользователя" MouseUp="TabItem_MouseUpStatus">
-                            <Border x:Name="StatusUserControl" Height="338" Margin="241,0,6,0">
+                            <Border x:Name="StatusUserControl" Height="338" Margin="241,0,6,0" Visibility="Hidden">
                                 <Grid Background="Transparent">
                                     <ListBox Style="{DynamicResource ListBoxOKR}" x:Name="StatusList" Height="100" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="220" Margin="0,0,313,228"/>
                                     <Button Style="{DynamicResource ButtonK}" Height="30" Margin="0,0,41,263" Content="Добавить статус" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="132" Click="Button_ClickAddStatusList"/>
-
-                                    <Border x:Name="DataStatusUser" Margin="10,126,41,53" CornerRadius="13" Background="#e0d4b5">
+                                    <Border Visibility="Hidden" x:Name="DataStatusUser" Margin="10,126,41,53" CornerRadius="13" Background="#e0d4b5">
                                         <Grid>
                                             <TextBox x:Name="StatusNameUser" Text="Введите название нового статуса пользователя:" Style="{DynamicResource TextBoxK}" Margin="0,29,0,0" Height="37" VerticalAlignment="Top" HorizontalAlignment="Center" Width="438" KeyUp="StatusNameUser_KeyUp" LostFocus="StatusNameUser_LostFocus" GotFocus="StatusNameUser_GotFocus"/>
 
@@ -67,11 +58,11 @@
 
                         <TabItem Style="{DynamicResource TabItemRounding}" Margin="226,21,-252,-25" Header="Роль пользователя" MouseUp="TabItem_MouseUpRole">
 
-                            <Grid  Name="UserRoleData" Background="Transparent" Margin="221,0,25,0" Width="550" >
+                            <Grid Visibility="Hidden" Name="UserRoleData" Background="Transparent" Margin="221,0,25,0" Width="550" >
                                 <ListBox Style="{DynamicResource ListBoxOKR}" x:Name="RoleList" Margin="0,0,275,268" Height="88" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="265"/>
                                 <Button x:Name="AddRole" Style="{DynamicResource ButtonK}" Height="30" Margin="0,0,54,293" Content="Добавить роль" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="132" Click="Button_ClickRoleAddList" />
 
-                                <Border x:Name="DataRoleUser" Margin="10,137,41,49" CornerRadius="13" Background="#e0d4b5">
+                                <Border Visibility="Hidden" x:Name="DataRoleUser" Margin="10,137,41,49" CornerRadius="13" Background="#e0d4b5">
                                     <Grid>
                                         <TextBox x:Name="RoleUserBox" Style="{DynamicResource TextBoxK}" Text="Введите название новой роли пользователя:" Margin="0,71,0,0" Height="36" VerticalAlignment="Top" HorizontalAlignment="Center" Width="429" KeyUp="TextBoxRole_KeyUp" GotFocus="RoleUserBox_GotFocus" LostFocus="RoleUserBox_LostFocus"/>
 
@@ -82,10 +73,8 @@
                             </Grid>
                         </TabItem>
                     </TabControl>
-
                 </Grid>
             </TabItem>
-
             <TabItem Style="{DynamicResource TabItemRounding}" Header="Управление комнатами" Margin="-163,102,133,-114">
                 <Grid Background="Transparent" Margin="208,0,0,0" HorizontalAlignment="Left" Width="588" Height="410">
                     <TabControl Background="Transparent" BorderBrush="Transparent" Margin="-20,-14,0,10">
@@ -99,10 +88,10 @@
 
                                     <Border x:Name="DataRoom" Visibility="Hidden" Margin="198,6,0,0" CornerRadius="13" Background="#e0d4b5" Height="332" VerticalAlignment="Top" HorizontalAlignment="Left" Width="358">
                                         <Grid>
-                                            <TextBox x:Name="CapacityRoom" Style="{DynamicResource TextBoxK}" Margin="286,0,0,294" HorizontalAlignment="Left" Width="46" Height="33" VerticalAlignment="Bottom" KeyUp="CapacityRoom_LostFocus"/>
-                                            <TextBox FontSize="18" x:Name="NumberRoom" Style="{DynamicResource TextBoxK}" Margin="120,0,0,294" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="44" KeyUp="NumberRoom_LostFocus"/>
+                                            <TextBox x:Name="CapacityRoom" Style="{DynamicResource TextBoxK}" Margin="286,0,0,294" HorizontalAlignment="Left" Width="46" Height="33" VerticalAlignment="Bottom" KeyUp="CapacityRoom_KeyUp"/>
+                                            <TextBox FontSize="18" x:Name="NumberRoom" Style="{DynamicResource TextBoxK}" Margin="120,0,0,294" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="44" KeyUp="NumberRoom_KeyUp"/>
 
-                                            <TextBox BorderThickness="0" Background="Transparent" x:Name="CauseRoom"  Text="Краткое описание" Height="87" VerticalAlignment="Top" HorizontalAlignment="Center" Width="314" Margin="0,109,0,0" KeyUp="CauseRoom_LostFocus"/>
+                                            <TextBox BorderThickness="0" Background="Transparent" x:Name="CauseRoom"  Text="Краткое описание" Height="87" VerticalAlignment="Top" HorizontalAlignment="Center" Width="314" Margin="0,109,0,0" KeyUp="CauseRoom_KeyUp"/>
                                             <ComboBox x:Name="TypeRoom" Style="{DynamicResource ComboBoxOKR}" Margin="121,0,0,243" HorizontalAlignment="Left" Width="215" Height="35" VerticalAlignment="Bottom"/>
 
                                             <TextBlock Margin="17,0,0,296" Text="Номер комнаты" RenderTransformOrigin="0.5,0.5" Height="22" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="96"/>
@@ -110,10 +99,10 @@
                                             <TextBlock Margin="32,0,0,250" Text="Тип комнаты" RenderTransformOrigin="0.5,0.5" Height="23" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="74"/>
 
                                             <TextBlock Margin="181,0,0,42" Text ="Цена" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="39"/>
-                                            <TextBox x:Name="Price" Style="{DynamicResource TextBoxK}" Margin="228,0,0,47" Height="42" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="116" KeyUp="Price_LostFocus"/>
+                                            <TextBox x:Name="Price" Style="{DynamicResource TextBoxK}" Margin="228,0,0,47" Height="42" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="116" KeyUp="Price_KeyUp"/>
 
                                             <TextBlock Margin="20,0,0,42" Text ="Кол-во комнат" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="97"/>
-                                            <TextBox x:Name="CountRoom" Style="{DynamicResource TextBoxK}" Margin="116,0,0,51" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="48" KeyUp="CountRoom_LostFocus"/>
+                                            <TextBox x:Name="CountRoom" Style="{DynamicResource TextBoxK}" Margin="116,0,0,51" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="48" KeyUp="CountRoom_KeyUp"/>
 
                                             <TextBlock Margin="22,0,0,98" Text ="Статус комнаты" Height="33" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="97"/>
                                             <ComboBox x:Name="StatusRoom"  Style="{DynamicResource ComboBoxOKR}" Margin="118,0,0,98" HorizontalAlignment="Left" Width="220" Height="33" VerticalAlignment="Bottom"/>
@@ -125,50 +114,43 @@
                                 </Grid>
                             </Border>
                         </TabItem>
-
-                        <TabItem Style="{DynamicResource TabItemRounding}" Margin="0,13,-63,-20" Header="Статус номера" HorizontalAlignment="Right" Width="131">
-                            <Border Height="338" Margin="16,0,6,0">
+                        <TabItem Style="{DynamicResource TabItemRounding}" Margin="0,13,-63,-20" Header="Статус номера" HorizontalAlignment="Right" Width="131" MouseUp="TabItem_MouseUp_1">
+                            <Border x:Name="StatusRoomPanel" Height="338" Margin="16,0,6,0">
                                 <Grid Background="Transparent" Width="550">
                                     <ListBox Style="{DynamicResource ListBoxOKR}" x:Name="StatusRoomList" Height="78" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="301" Margin="0,0,239,229"/>
-                                    <Button Style="{DynamicResource ButtonK}" Height="30" Margin="0,0,56,238" Content="Добавить статус" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="132"/>
+                                    <Button Style="{DynamicResource ButtonK}" Height="30" Margin="0,0,41,253" Content="Добавить статус" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="132" Click="Button_ClickStatusRoomList"/>
 
-                                    <Border Margin="10,126,41,53" CornerRadius="13" Background="#e0d4b5">
+                                    <Border x:Name="StatusRoomData" Margin="10,126,41,53" CornerRadius="13" Background="#e0d4b5">
                                         <Grid>
-                                            <TextBox x:Name="StatusRoomName" Style="{DynamicResource TextBoxK}" Text="Введите название нового статуса номера" Margin="28,23,0,0" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="456"/>
+                                            <TextBox x:Name="StatusRoomName" Style="{DynamicResource TextBoxK}" Text="Введите название нового статуса номера" Margin="28,23,0,0" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="456" KeyUp="StatusRoomName_KeyUp" LostFocus="StatusRoomName_LostFocus" GotFocus="StatusRoomName_GotFocus"/>
 
-                                            <Button x:Name="DeleteStatusRoom" Style="{DynamicResource ButtonK}" Content="Удалить" Margin="294,97,15,28"/>
-                                            <Button x:Name="ChangeStatusRoom" Style="{DynamicResource ButtonK}" Content="Изменить" Height="33" VerticalAlignment="Top" HorizontalAlignment="Left" Width="198" Margin="28,98,0,0"/>
+                                            <Button x:Name="DeleteStatusRoom" Style="{DynamicResource ButtonK}" Content="Удалить" Margin="294,97,15,28" Click="DeleteStatusRoom_Click"/>
+                                            <Button x:Name="ChangeStatusRoom" Style="{DynamicResource ButtonK}" Content="Изменить" Height="33" VerticalAlignment="Top" HorizontalAlignment="Left" Width="198" Margin="28,98,0,0" Opacity="0.5" Click="ChangeStatusRoom_Click"/>
                                         </Grid>
                                     </Border>
                                 </Grid>
                             </Border>
-
                         </TabItem>
-
-                        <TabItem Style="{DynamicResource TabItemRounding}" Margin="0,13,-69,-20" Header="Тип номера" HorizontalAlignment="Right" Width="131">
-                            <Border Height="338" Margin="16,0,6,0">
+                        <TabItem Style="{DynamicResource TabItemRounding}" Margin="69,13,-85,-20" Header="Тип номера" MouseUp="TabItem_MouseUp_2">
+                            <Border x:Name="PanelTypeRoomData" Height="338" Margin="16,0,6,0" >
                                 <Grid Background="Transparent" Width="550">
                                     <ListBox Style="{DynamicResource ListBoxOKR}" x:Name="TypeRoomList" Height="80" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="301" Margin="0,0,239,229"/>
-                                    <Button Style="{DynamicResource ButtonK}" Height="30" Margin="0,0,56,238" Content="Добавить тип" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="158"/>
+                                    <Button Style="{DynamicResource ButtonK}" Height="30" Margin="0,0,56,238" Content="Добавить тип" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="158" Click="Button_ClickAddTypeRoomList"/>
 
-                                    <Border Margin="10,126,41,53" CornerRadius="13" Background="#e0d4b5">
+                                    <Border x:Name="TypeData"  Margin="10,126,41,53" CornerRadius="13" Background="#e0d4b5">
                                         <Grid>
-                                            <TextBox x:Name="TypeRoomName" Text="Введите название типа номера" Style="{DynamicResource TextBoxK}" Margin="34,23,0,0" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="435"/>
+                                            <TextBox x:Name="TypeRoomName" Text="Введите название типа номера" Style="{DynamicResource TextBoxK}" Margin="34,23,0,0" Height="36" VerticalAlignment="Top" HorizontalAlignment="Left" Width="435" KeyUp="TypeRoomName_KeyUp" GotFocus="TypeRoomName_GotFocus" LostFocus="TypeRoomName_LostFocus"/>
 
-                                            <Button x:Name="DeleteRoomType" Style="{DynamicResource ButtonK}" Content="Удалить" Margin="279,97,30,28"/>
-                                            <Button x:Name="ChangeTypeRoom" Style="{DynamicResource ButtonK}" Content="Изменить" Height="33" VerticalAlignment="Top" HorizontalAlignment="Left" Width="216" Margin="34,98,0,0"/>
+                                            <Button x:Name="DeleteRoomType" Style="{DynamicResource ButtonK}" Content="Удалить" Margin="279,97,30,28" Click="DeleteTypeRoom_Click"/>
+                                            <Button x:Name="ChangeTypeRoom" Style="{DynamicResource ButtonK}" Content="Изменить" Height="33" VerticalAlignment="Top" HorizontalAlignment="Left" Width="216" Margin="34,98,0,0" Opacity="0.5" Click="ChangeTypeRoom_Click"/>
                                         </Grid>
                                     </Border>
                                 </Grid>
                             </Border>
-
                         </TabItem>
-
                     </TabControl>
-
                 </Grid>
             </TabItem>
-
         </TabControl>
     </Grid>
 </Page>
