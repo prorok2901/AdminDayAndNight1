@@ -29,5 +29,15 @@ namespace AdminDayAndNight
                 StartImage.ImageSource = new BitmapImage(new Uri("pack://application:,,,/Image/First_Start.png"));
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Windows.Close();
+        }
+
+        private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Windows.DragMove();
+        }
     }
 }
