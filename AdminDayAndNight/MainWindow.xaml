@@ -68,7 +68,7 @@
     </Window.Background>
     <Grid>
 
-        <Grid Margin="0,28,305,339" x:Name="FirstStart">
+        <Grid Visibility="Hidden" Margin="0,28,305,339" x:Name="FirstStart">
             <Border CornerRadius="13" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#baac8b" Width="460">
                 <TextBlock Text="♠Добро пожаловать в первый раз♥" FontSize="24" HorizontalAlignment="Left" FontStyle="Italic" FontFamily="Ink Free" Width="450" Margin="20,0,0,0"/>
             </Border>
