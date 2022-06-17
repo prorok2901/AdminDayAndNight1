@@ -17,12 +17,27 @@ namespace AdminDayAndNight
         private string prevRoleName;
 
         //работа с пользователем:
-        private bool IsChangeUser;
+        private bool IsLoginChange;
+        private bool IsPasswordChange;
+        private bool IsNameChange;
+
+        private bool IsRoleChange;
+        private bool IsStatusChange;
+
         private BD.user PrevUser;
 
         //работа с номерами отеля
+        private bool IsTypeRoom;
+        private bool IsStatusRoom;
+
+        private bool IsCapacityRoom;
+        private bool IsCountRoom;
+        private bool IsNumberRoom;
+        private bool IsPriceRoom;
+        private bool IsShortDescription;
+
+
         private BD.info_room PrevRoom;
-        private bool IsChangeRoom;
 
         //работа со статусом комнаты
         private string PrevStatusNameRoom;
@@ -135,35 +150,37 @@ namespace AdminDayAndNight
         private void ChangeStatusUser_Click(object _sender, RoutedEventArgs _e)
         {
             Button button = _sender as Button;
-
-            BD.status_user status = dataBase.DataBase().status_user.FirstOrDefault(a => a.name == prevStatusName);
-
-            if (button.Content.ToString() == "Изменить" && button.Opacity != 0.5)
+            if (button.Opacity != 0.5)
             {
-                if (dataBase.DataBase().status_user.Any(a => a.ID == status.ID))
+                BD.status_user status = dataBase.DataBase().status_user.FirstOrDefault(a => a.name == prevStatusName);
+
+                if (button.Content.ToString() == "Изменить")
                 {
-                    status.name = RoleUserBox.Text;
-                }
-            }
-            else if (button.Content.ToString() == "Сохранить" && button.Opacity != 0.5)
-            {
-                if (!dataBase.DataBase().status_user.Any(a => a.name == StatusNameUser.Text))
-                {
-                    BD.status_user newRoleUser = new BD.status_user
+                    if (dataBase.DataBase().status_user.Any(a => a.ID == status.ID))
                     {
-                        name = StatusNameUser.Text
-                    };
-                    dataBase.DataBase().status_user.Add(newRoleUser);
+                        status.name = RoleUserBox.Text;
+                    }
                 }
-                else
+                else if (button.Content.ToString() == "Сохранить" && button.Opacity != 0.5)
                 {
-                    MessageBox.Show("Такой статус уже есть в базе данных");
+                    if (!dataBase.DataBase().status_user.Any(a => a.name == StatusNameUser.Text))
+                    {
+                        BD.status_user newRoleUser = new BD.status_user
+                        {
+                            name = StatusNameUser.Text
+                        };
+                        dataBase.DataBase().status_user.Add(newRoleUser);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Такой статус уже есть в базе данных");
+                    }
                 }
+                dataBase.DataBase().SaveChanges();
+                DataStatusUser.Visibility = Visibility.Hidden;
+                ChangeStatusUser.Opacity = 0.5;
+                UpdataListStatus();
             }
-            dataBase.DataBase().SaveChanges();
-            DataStatusUser.Visibility = Visibility.Hidden;
-            ChangeStatusUser.Opacity = 0.5;
-            UpdataListStatus();
         }
 
         private void StatusNameUser_KeyUp(object _sender, KeyEventArgs _e)
@@ -175,10 +192,16 @@ namespace AdminDayAndNight
                 if (prevStatusName != box.Text && "Введите название нового статуса" != box.Text)
                 {
                     ChangeStatusRoom.Opacity = 1;
-                    return;
+                }
+                else
+                {
+                    ChangeStatusRoom.Opacity = 0.5;
                 }
             }
-            ChangeStatusRoom.Opacity = 0.5;
+            else
+            {
+                ChangeStatusRoom.Opacity = 0.5;
+            }
 
         }
         private void UpdataListStatus()
@@ -263,37 +286,40 @@ namespace AdminDayAndNight
         {
 
             Button button = _sender as Button;
-
-            BD.role role = dataBase.DataBase().role.FirstOrDefault(a => a.name == prevRoleName);
-
-            if (button.Content.ToString() == "Изменить" && button.Opacity != 0.5)
+            if (button.Opacity != 0.5)
             {
-                if (dataBase.DataBase().role.Any(a => a.ID == role.ID))
+                BD.role role = dataBase.DataBase().role.FirstOrDefault(a => a.name == prevRoleName);
+
+                if (button.Content.ToString() == "Изменить")
                 {
-                    role.name = RoleUserBox.Text;
-                }
-            }
-            else if (button.Content.ToString() == "Сохранить" && button.Opacity != 0.5)
-            {
-                if (!dataBase.DataBase().role.Any(a => a.name == RoleUserBox.Text))
-                {
-                    BD.role newRoleUser = new BD.role
+                    if (dataBase.DataBase().role.Any(a => a.ID == role.ID))
                     {
-                        name = RoleUserBox.Text
-                    };
-                    dataBase.DataBase().role.Add(newRoleUser);
+                        role.name = RoleUserBox.Text;
+                    }
                 }
-                else
+                else if (button.Content.ToString() == "Сохранить" && button.Opacity != 0.5)
                 {
-                    MessageBox.Show("Такая роль уже есть в базе данных");
+                    if (!dataBase.DataBase().role.Any(a => a.name == RoleUserBox.Text))
+                    {
+                        BD.role newRoleUser = new BD.role
+                        {
+                            name = RoleUserBox.Text
+                        };
+                        dataBase.DataBase().role.Add(newRoleUser);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Такая роль уже есть в базе данных");
+                    }
                 }
+                dataBase.DataBase().SaveChanges();
+
+                DataRoleUser.Visibility = Visibility.Hidden;
+
+                ChangeRoleUser.Opacity = 0.5;
+                UpdateTypeRoomList();
             }
-            dataBase.DataBase().SaveChanges();
-
-            DataRoleUser.Visibility = Visibility.Hidden;
-
-            ChangeRoleUser.Opacity = 0.5;
-            UpdateTypeRoomList();
+            
         }
 
         private void DeleteRoleUser_Click(object _sender, RoutedEventArgs _e)
@@ -374,8 +400,8 @@ namespace AdminDayAndNight
 
             UpdateComboBoxUser();
 
-            RoleEmployee.SelectedIndex = 0;
-            StatusEmployee.SelectedIndex = 0;
+            RoleEmployee.SelectedIndex = -1;
+            StatusEmployee.SelectedIndex = -1;
 
             DeleteUser.Content = "Отменить";
             ChangeUser.Content = "Нанять";
@@ -431,60 +457,62 @@ namespace AdminDayAndNight
         private void ChangeUser_Click(object _sender, RoutedEventArgs _e)
         {
             string buttonContent = (_sender as Button).Content.ToString();
-
-            BD.role role = dataBase.DataBase().role.FirstOrDefault(a => a.name == RoleEmployee.Text);
-            BD.status_user status = dataBase.DataBase().status_user.FirstOrDefault(a => a.name == StatusEmployee.Text);
-
-            if (buttonContent == "Изменить" && ChangeUser.Opacity == 1)
+            if (ChangeUser.Opacity == 1)
             {
-                BD.user user = dataBase.DataBase().user.FirstOrDefault(a => a.id == PrevUser.id);
+                BD.role role = dataBase.DataBase().role.FirstOrDefault(a => a.name == RoleEmployee.Text);
+                BD.status_user status = dataBase.DataBase().status_user.FirstOrDefault(a => a.name == StatusEmployee.Text);
 
-                if (user != null)
+                if (buttonContent == "Изменить")
                 {
-                    if (!dataBase.DataBase().user.Any(a => a.login == LoginEmployee.Text))
+                    BD.user user = dataBase.DataBase().user.FirstOrDefault(a => a.id == PrevUser.id);
+
+                    if (user != null)
                     {
-                        user.login = LoginEmployee.Text;
+                        if (!dataBase.DataBase().user.Any(a => a.login == LoginEmployee.Text))
+                        {
+                            user.login = LoginEmployee.Text;
+                        }
+                        else if (PrevUser.login == LoginEmployee.Text)
+                        {
+                            user.login = LoginEmployee.Text;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Логин занят");
+                        }
+                        user.password = PasswordEmployee.Text;
+                        user.name = NameEmployee.Text;
+                        user.role = role.ID;
+                        user.status_user = status;
                     }
-                    else if (PrevUser.login == LoginEmployee.Text)
-                    {
-                        user.login = LoginEmployee.Text;
-                    }
-                    else
+
+                }
+                else if (buttonContent == "Нанять" && ChangeUser.Opacity == 1)
+                {
+                    if (dataBase.DataBase().user.Any(a => a.login == LoginEmployee.Text))
                     {
                         MessageBox.Show("Логин занят");
                     }
-                    user.password = PasswordEmployee.Text;
-                    user.name = NameEmployee.Text;
-                    user.role = role.ID;
-                    user.status_user = status;
-                }
-
-            }
-            else if (buttonContent == "Нанять" && ChangeUser.Opacity == 1)
-            {
-                if (dataBase.DataBase().user.Any(a => a.login == LoginEmployee.Text))
-                {
-                    MessageBox.Show("Логин занят");
-                }
-                else
-                {
-                    BD.user newUser = new BD.user
+                    else
                     {
-                        password = PasswordEmployee.Text,
-                        name = NameEmployee.Text,
-                        role = role.ID,
-                        status_user = status,
-                        login = LoginEmployee.Text
-                    };
-                    dataBase.DataBase().user.Add(newUser);
+                        BD.user newUser = new BD.user
+                        {
+                            password = PasswordEmployee.Text,
+                            name = NameEmployee.Text,
+                            role = role.ID,
+                            status_user = status,
+                            login = LoginEmployee.Text
+                        };
+                        dataBase.DataBase().user.Add(newUser);
+                    }
                 }
+                UpdateUserList();
+
+                ChangeUser.Opacity = 0.5;
+
+                dataBase.DataBase().SaveChanges();
+                PanelEmployee.Visibility = Visibility.Hidden;
             }
-            UpdateUserList();
-
-            ChangeUser.Opacity = 0.5;
-
-            dataBase.DataBase().SaveChanges();
-            PanelEmployee.Visibility = Visibility.Hidden;
         }
 
         private void DeleteUser_Click(object _sender, RoutedEventArgs _e)
@@ -558,17 +586,17 @@ namespace AdminDayAndNight
 
             if (box.Text != "")
             {
-                if (IsChangeUser)
+
+                if (PrevUser.name != NameEmployee.Text && NameEmployee.Text != "Имя")
                 {
-                    if (PrevUser.name != NameEmployee.Text && NameEmployee.Text != "Имя")
-                    {
-                        ChangeUser.Opacity = 1;
-                    }
+                    IsNameChange = true;
                 }
-                if (IsChangeUser == false) IsChangeUser = true;
-                return;
+                else
+                {
+                    IsNameChange = false;
+                }
+
             }
-            ChangeUser.Opacity = 0.5;
         }
 
         private void LoginEmployee_LostFocus(object _sender, RoutedEventArgs _e)
@@ -581,17 +609,21 @@ namespace AdminDayAndNight
 
             if (box.Text != "")
             {
-                if (IsChangeUser)
+
+                if (PrevUser.login != LoginEmployee.Text && LoginEmployee.Text != "Логин Работника")
                 {
-                    if (PrevUser.login != LoginEmployee.Text && LoginEmployee.Text != "Логин Работника")
-                    {
-                        ChangeUser.Opacity = 1;
-                        return;
-                    }
+                    IsLoginChange = true;
+
                 }
-                if (IsChangeUser == false) IsChangeUser = true;
+                else
+                {
+                    IsLoginChange = false;
+                }
             }
-            ChangeUser.Opacity = 0.5;
+            else
+            {
+                IsLoginChange = false;
+            }
         }
 
         private void LoginEmployee_GotFocus(object _sender, RoutedEventArgs _e)
@@ -609,20 +641,73 @@ namespace AdminDayAndNight
 
             if (box.Text != "")
             {
-                if (IsChangeUser)
+                if (PrevUser.password != box.Text && PasswordEmployee.Text != "Пароль работника")
                 {
-                    if (PrevUser.password != box.Text && PasswordEmployee.Text != "Пароль работника")
-                    {
-                        ChangeUser.Opacity = 1;
-                    }
+                    IsPasswordChange = true;
                 }
-                if (IsChangeUser == false) IsChangeUser = true;
+                else
+                {
+                    IsPasswordChange = false;
+                }
             }
-            ChangeUser.Opacity = 0.5;
+            else
+            {
+                IsPasswordChange = false;
+            }
         }
         private void PasswordEmployee_LostFocus(object _sender, RoutedEventArgs _e)
         {
             FillEmptyBox.FillEmptyTextBox("Пароль работника", PasswordEmployee);
+        }
+
+        private void Grid_MouseEnter(object _sender, MouseEventArgs _e)
+        {
+            if (IsRoleChange || IsPasswordChange || IsNameChange || IsStatusChange || IsLoginChange)
+            {
+                ChangeUser.Opacity = 1;
+            }
+            else
+            {
+                ChangeUser.Opacity = 0.5;
+            }
+        }
+
+
+        private void ComboRoleUser_LostFocus(object _sender, RoutedEventArgs _e)
+        {
+            if (RoleEmployee.SelectedIndex > -1)
+            {
+                if (PrevUser.role1.name != RoleEmployee.Text)
+                {
+                    IsPasswordChange = true;
+                }
+                else
+                {
+                    IsLoginChange = false;
+                }
+            }
+            else
+            {
+                IsLoginChange = false;
+            }
+        }
+        private void ComboStatusUser_LostFocus(object _sender, RoutedEventArgs _e)
+        {
+            if (StatusEmployee.SelectedIndex > -1)
+            {
+                if (PrevUser.status_user.name != StatusEmployee.Text)
+                {
+                    IsStatusChange = true;
+                }
+                else
+                {
+                    IsStatusChange = false;
+                }
+            }
+            else
+            {
+                IsStatusChange = false;
+            }
         }
 
         private void UpdateComboBoxRoom()
@@ -728,53 +813,56 @@ namespace AdminDayAndNight
 
         private void ChangeRoom_Click(object _sender, RoutedEventArgs _e)
         {
-            string buttonContent = (_sender as Button).Content.ToString();
-
-            BD.type_room typeRoom = dataBase.DataBase().type_room.FirstOrDefault(a => a.name == TypeRoom.Text);
-            BD.status_room statusRoom = dataBase.DataBase().status_room.FirstOrDefault(a => a.name == StatusRoom.Text);
-
-            if (buttonContent == "Изменить" && ChangeRoom.Opacity == 1)
+            if((_sender as Button).Opacity == 1)
             {
-                BD.info_room room = dataBase.DataBase().info_room.FirstOrDefault(a => a.num_room == PrevRoom.num_room);
+                string buttonContent = (_sender as Button).Content.ToString();
 
-                if (room != null)
+                BD.type_room typeRoom = dataBase.DataBase().type_room.FirstOrDefault(a => a.name == TypeRoom.Text);
+                BD.status_room statusRoom = dataBase.DataBase().status_room.FirstOrDefault(a => a.name == StatusRoom.Text);
+
+                if (buttonContent == "Изменить")
                 {
-                    room.capacity = int.Parse(CapacityRoom.Text);
-                    room.count_room = int.Parse(CountRoom.Text);
-                    room.type_room = typeRoom.ID;
-                    room.status_room = statusRoom.ID;
-                    room.chort_description = CauseRoom.Text;
-                    room.price = decimal.Parse(Price.Text);
-                }
-            }
-            else if (buttonContent == "Сохранить" && ChangeRoom.Opacity == 1)
-            {
-                int number = int.Parse(NumberRoom.Text);
-                if (dataBase.DataBase().info_room.Any(a => a.num_room == number))
-                {
-                    BD.info_room newRoom = new BD.info_room
+                    BD.info_room room = dataBase.DataBase().info_room.FirstOrDefault(a => a.num_room == PrevRoom.num_room);
+
+                    if (room != null)
                     {
-                        num_room = int.Parse(NumberRoom.Text),
-                        capacity = int.Parse(CapacityRoom.Text),
-                        type_room = typeRoom.ID,
-                        status_room = statusRoom.ID,
-                        chort_description = CauseRoom.Text,
-                        price = decimal.Parse(Price.Text),
-                    };
-
-                    dataBase.DataBase().info_room.Add(newRoom);
+                        room.capacity = int.Parse(CapacityRoom.Text);
+                        room.count_room = int.Parse(CountRoom.Text);
+                        room.type_room = typeRoom.ID;
+                        room.status_room = statusRoom.ID;
+                        room.chort_description = CauseRoom.Text;
+                        room.price = decimal.Parse(Price.Text);
+                    }
                 }
-                else
+                else if (buttonContent == "Сохранить")
                 {
-                    MessageBox.Show("Такой номер уже есть в базе данных");
+                    int number = int.Parse(NumberRoom.Text);
+                    if (dataBase.DataBase().info_room.Any(a => a.num_room == number))
+                    {
+                        BD.info_room newRoom = new BD.info_room
+                        {
+                            num_room = int.Parse(NumberRoom.Text),
+                            capacity = int.Parse(CapacityRoom.Text),
+                            type_room = typeRoom.ID,
+                            status_room = statusRoom.ID,
+                            chort_description = CauseRoom.Text,
+                            price = decimal.Parse(Price.Text),
+                        };
+
+                        dataBase.DataBase().info_room.Add(newRoom);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Такой номер уже есть в базе данных");
+                    }
                 }
+                UpdateRoomList();
+
+                ChangeRoom.Opacity = 0.5;
+
+                dataBase.DataBase().SaveChanges();
+                DataRoom.Visibility = Visibility.Hidden;
             }
-            UpdateRoomList();
-
-            ChangeRoom.Opacity = 0.5;
-
-            dataBase.DataBase().SaveChanges();
-            DataRoom.Visibility = Visibility.Hidden;
         }
 
         private void DeleteRoom_Click(object _sender, RoutedEventArgs _e)
@@ -815,73 +903,53 @@ namespace AdminDayAndNight
         {
             TextBox box = _sender as TextBox;
 
-            if (box.Text != "")
+            if (box.Text != "" && PrevRoom.capacity != int.Parse(box.Text))
             {
-                if (IsChangeRoom)
-                {
-                    if (PrevRoom.capacity != int.Parse(box.Text))
-                    {
-                        ChangeRoom.Opacity = 1;
-                    }
-                }
-                if (IsChangeRoom == false) IsChangeRoom = true;
-                return;
+                IsCapacityRoom = true;
             }
-            ChangeRoom.Opacity = 0.5;
+            else
+            {
+                IsCapacityRoom = false;
+            }
         }
         private void CountRoom_KeyUp(object _sender, KeyEventArgs _e)
         {
             TextBox box = _sender as TextBox;
 
-            if (box.Text != "")
+            if (box.Text != "" && PrevRoom.count_room != int.Parse(box.Text))
             {
-                if (IsChangeRoom)
-                {
-                    if (PrevRoom.count_room != int.Parse(box.Text))
-                    {
-                        ChangeRoom.Opacity = 1;
-                    }
-                }
-                if (IsChangeRoom == false) IsChangeRoom = true;
-                return;
+                IsCountRoom = true;
             }
-            ChangeRoom.Opacity = 0.5;
+            else
+            {
+                IsCountRoom = false;
+            }
         }
         private void NumberRoom_KeyUp(object _sender, KeyEventArgs _e)
         {
             TextBox box = _sender as TextBox;
 
-            if (box.Text != "")
+            if (box.Text != "" && PrevRoom.num_room != int.Parse(box.Text))
             {
-                if (IsChangeRoom)
-                {
-                    if (PrevRoom.num_room != int.Parse(box.Text))
-                    {
-                        ChangeRoom.Opacity = 1;
-                    }
-                }
-                if (IsChangeRoom == false) IsChangeRoom = true;
-                return;
+                IsNumberRoom = true;
             }
-            ChangeRoom.Opacity = 0.5;
+            else
+            {
+                IsNumberRoom = false;
+            }
         }
         private void CauseRoom_KeyUp(object _sender, KeyEventArgs _e)
         {
             TextBox box = _sender as TextBox;
 
-            if (box.Text != "")
+            if (box.Text != "" && PrevRoom.chort_description != box.Text)
             {
-                if (IsChangeRoom)
-                {
-                    if (PrevRoom.chort_description != box.Text)
-                    {
-                        ChangeRoom.Opacity = 1;
-                    }
-                }
-                if (IsChangeRoom == false) IsChangeRoom = true;
-                return;
+                IsShortDescription = true;
             }
-            ChangeRoom.Opacity = 0.5;
+            else
+            {
+                IsShortDescription = false;
+            }
         }
         private void Price_KeyUp(object _sender, KeyEventArgs _e)
         {
@@ -889,12 +957,45 @@ namespace AdminDayAndNight
 
             if (box.Text != "" && PrevRoom.price != decimal.Parse(box.Text))
             {
-                if (IsChangeRoom)
+                IsPriceRoom = true;
+            }
+            else
+            {
+                IsPriceRoom = false;
+            }
+
+        }
+        private void StatusRoom_LostFocus(object _sender, RoutedEventArgs _e)
+        {
+            if (StatusRoom.SelectedIndex > -1)
+            {
+                if (PrevRoom.status_room1.name != StatusRoom.Text)
                 {
-                    ChangeRoom.Opacity = 1;
+                    IsStatusRoom = true;
                 }
-                if (IsChangeRoom == false) IsChangeRoom = true;
-                return;
+
+            }
+            else
+            {
+                IsStatusRoom = false;
+            }
+        }
+        private void TypeRoom_LostFocus(object _sender, RoutedEventArgs _e)
+        {
+            if (StatusEmployee.SelectedIndex > -1 && PrevUser.status_user.name != StatusEmployee.Text)
+            {
+                IsTypeRoom = true;
+            }
+            else
+            {
+                IsTypeRoom = false;
+            }
+        }
+        private void Grid_MouseEnter_1(object _sender, MouseEventArgs _e)
+        {
+            if (IsCapacityRoom || IsCountRoom || IsShortDescription || IsPriceRoom || IsNumberRoom || IsStatusChange || IsTypeRoom)
+            {
+                ChangeRoom.Opacity = 1;
             }
             ChangeRoom.Opacity = 0.5;
         }
@@ -905,7 +1006,7 @@ namespace AdminDayAndNight
 
             if (box.Text != "")
             {
-                if (PrevStatusNameRoom != box.Text && box.Text != PrevStatusNameRoom)
+                if (PrevStatusNameRoom != box.Text && box.Text != "Введите название нового статуса")
                 {
                     ChangeStatusRoom.Opacity = 1;
                     return;
@@ -978,35 +1079,37 @@ namespace AdminDayAndNight
         private void ChangeStatusRoom_Click(object _sender, RoutedEventArgs _e)
         {
             Button button = _sender as Button;
-
-            BD.status_room statusRoom = dataBase.DataBase().status_room.FirstOrDefault(a => a.name == PrevStatusNameRoom);
-
-            if (ChangeStatusRoom.Content.ToString() == "Изменить" && button.Opacity != 0.5)
+            if(button.Opacity != 0.5)
             {
-                if (dataBase.DataBase().status_room.Any(a => a.ID == statusRoom.ID))
+                BD.status_room statusRoom = dataBase.DataBase().status_room.FirstOrDefault(a => a.name == PrevStatusNameRoom);
+
+                if (ChangeStatusRoom.Content.ToString() == "Изменить")
                 {
-                    statusRoom.name = StatusRoomName.Text;
-                }
-            }
-            else if (ChangeStatusRoom.Content.ToString() == "Сохранить" && button.Opacity != 0.5)
-            {
-                if (!dataBase.DataBase().status_room.Any(a => a.name == StatusRoomName.Text))
-                {
-                    BD.status_room newStatusRoom = new BD.status_room
+                    if (dataBase.DataBase().status_room.Any(a => a.ID == statusRoom.ID))
                     {
-                        name = StatusRoomName.Text
-                    };
-                    dataBase.DataBase().status_room.Add(newStatusRoom);
+                        statusRoom.name = StatusRoomName.Text;
+                    }
                 }
-                else
+                else if (ChangeStatusRoom.Content.ToString() == "Сохранить")
                 {
-                    MessageBox.Show("Такой статус номера уже есть в базе данных");
+                    if (!dataBase.DataBase().status_room.Any(a => a.name == StatusRoomName.Text))
+                    {
+                        BD.status_room newStatusRoom = new BD.status_room
+                        {
+                            name = StatusRoomName.Text
+                        };
+                        dataBase.DataBase().status_room.Add(newStatusRoom);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Такой статус номера уже есть в базе данных");
+                    }
                 }
+                dataBase.DataBase().SaveChanges();
+                StatusRoomData.Visibility = Visibility.Hidden;
+                ChangeStatusRoom.Opacity = 0.5;
+                UpdateStatusRoomList();
             }
-            dataBase.DataBase().SaveChanges();
-            StatusRoomData.Visibility = Visibility.Hidden;
-            ChangeStatusRoom.Opacity = 0.5;
-            UpdateStatusRoomList();
         }
 
         private void DeleteStatusRoom_Click(object _sender, RoutedEventArgs _e)
@@ -1131,35 +1234,37 @@ namespace AdminDayAndNight
         private void ChangeTypeRoom_Click(object _sender, RoutedEventArgs _e)
         {
             Button button = _sender as Button;
-
-            BD.type_room typeRoom = dataBase.DataBase().type_room.FirstOrDefault(a => a.name == PrevTypeNameRoom);
-
-            if (button.Content.ToString() == "Изменить" && button.Opacity != 0.5)
+            if (button.Opacity != 0.5)
             {
-                if (dataBase.DataBase().type_room.Any(a => a.ID == typeRoom.ID))
+                BD.type_room typeRoom = dataBase.DataBase().type_room.FirstOrDefault(a => a.name == PrevTypeNameRoom);
+
+                if (button.Content.ToString() == "Изменить")
                 {
-                    typeRoom.name = TypeRoomName.Text;
-                }
-            }
-            else if (button.Content.ToString() == "Сохранить" && button.Opacity != 0.5)
-            {
-                if (!dataBase.DataBase().type_room.Any(a => a.name == TypeRoomName.Text))
-                {
-                    BD.type_room newTypeRoom = new BD.type_room
+                    if (dataBase.DataBase().type_room.Any(a => a.ID == typeRoom.ID))
                     {
-                        name = TypeRoomName.Text
-                    };
-                    dataBase.DataBase().type_room.Add(newTypeRoom);
+                        typeRoom.name = TypeRoomName.Text;
+                    }
                 }
-                else
+                else if (button.Content.ToString() == "Сохранить")
                 {
-                    MessageBox.Show("Такой тип уже есть в базе данных");
+                    if (!dataBase.DataBase().type_room.Any(a => a.name == TypeRoomName.Text))
+                    {
+                        BD.type_room newTypeRoom = new BD.type_room
+                        {
+                            name = TypeRoomName.Text
+                        };
+                        dataBase.DataBase().type_room.Add(newTypeRoom);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Такой тип уже есть в базе данных");
+                    }
                 }
+                dataBase.DataBase().SaveChanges();
+                TypeData.Visibility = Visibility.Hidden;
+                ChangeTypeRoom.Opacity = 0.5;
+                UpdateTypeRoomList();
             }
-            dataBase.DataBase().SaveChanges();
-            TypeData.Visibility = Visibility.Hidden;
-            ChangeTypeRoom.Opacity = 0.5;
-            UpdateTypeRoomList();
         }
 
         private void DeleteTypeRoom_Click(object _sender, RoutedEventArgs _e)
@@ -1200,6 +1305,7 @@ namespace AdminDayAndNight
             PanelTypeRoomData.Visibility = Visibility.Hidden;
             UpdateUserList();
         }
+
     }
 }
 
